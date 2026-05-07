@@ -1,24 +1,37 @@
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#f6f4ef] text-[#1f1f1f]">
-      <section className="max-w-6xl mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-2 gap-14 items-center">
+
+      {/* HERO SECTION */}
+
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <div className="grid items-center gap-14 lg:grid-cols-2">
+
           <div>
-            <div className="inline-block text-sm font-medium px-3 py-1 rounded-full bg-white border mb-6">
+
+            <div className="mb-6 inline-block rounded-full border border-[#d7d2c8] bg-white px-3 py-1 text-sm font-medium">
               Ireland’s modular rental marketplace
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-semibold leading-tight mb-6">
-              Find and list modular units for rent, all in one place.
+            <h1 className="mb-6 text-5xl font-semibold leading-tight md:text-6xl">
+              A new way to find and list modular garden rentals in Ireland.
             </h1>
 
-            <p className="text-lg md:text-xl text-[#555] max-w-xl mb-8 leading-8">
-              ModRent is a dedicated platform for modular and garden unit
-              rentals in Ireland, designed to make listings clearer, simpler,
-              and easier to understand.
+            <p className="mb-6 max-w-xl text-lg leading-8 text-[#555] md:text-xl">
+              ModRent is a dedicated platform for modular homes,
+              garden units, backyard studios and small standalone
+              rental spaces across Ireland.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            <p className="mb-8 max-w-xl text-base leading-8 text-[#555]">
+              Following the Irish Government’s announcement on proposed
+              planning exemptions for certain modular garden units,
+              ModRent helps owners and renters explore this emerging
+              rental category clearly and responsibly.
+            </p>
+
+            <div className="flex flex-col gap-4 sm:flex-row">
+
               <a
                 href="/listings"
                 style={{
@@ -30,6 +43,7 @@ export default function Home() {
                   textAlign: "center",
                   fontWeight: 600,
                   minWidth: "170px",
+                  textDecoration: "none",
                 }}
               >
                 Browse Rentals
@@ -47,74 +61,108 @@ export default function Home() {
                   fontWeight: 600,
                   border: "1px solid #d7d2c8",
                   minWidth: "170px",
+                  textDecoration: "none",
                 }}
               >
                 List Your Unit
               </a>
+
             </div>
 
-            <div className="grid grid-cols-3 gap-4 max-w-lg">
-              <div className="bg-white border border-[#e3ddd2] rounded-2xl p-4">
-                <p className="text-2xl font-semibold">Clear</p>
-                <p className="text-sm text-[#666] mt-1">Dedicated listings</p>
-              </div>
-
-              <div className="bg-white border border-[#e3ddd2] rounded-2xl p-4">
-                <p className="text-2xl font-semibold">Simple</p>
-                <p className="text-sm text-[#666] mt-1">Easy to browse</p>
-              </div>
-
-              <div className="bg-white border border-[#e3ddd2] rounded-2xl p-4">
-                <p className="text-2xl font-semibold">Focused</p>
-                <p className="text-sm text-[#666] mt-1">One rental category</p>
-              </div>
-            </div>
           </div>
 
-          <div className="bg-white border border-[#e6e0d5] rounded-[28px] p-6 shadow-sm">
-            <div className="rounded-[22px] overflow-hidden mb-5">
+          <div className="rounded-[28px] border border-[#e6e0d5] bg-white p-6 shadow-sm">
+
+            <div className="mb-5 overflow-hidden rounded-[22px]">
               <img
-                src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"
-                alt="Interior of modular rental"
-                className="w-full h-[360px] object-cover"
+                src="/modular-unit.jpg"
+                alt="Example modular garden unit"
+                className="h-[360px] w-full object-cover"
               />
             </div>
 
-            <div className="flex items-start justify-between gap-4 mb-4">
-              <div>
-                <h2 className="text-2xl font-semibold mb-1">
-                  Garden Studio in Wicklow
-                </h2>
-                <p className="text-[#666]">Wicklow</p>
-              </div>
+            <div className="mb-4">
 
-              <div className="text-right">
-                <p className="text-2xl font-semibold">€1,100</p>
-                <p className="text-sm text-[#666]">per month</p>
-              </div>
+              <h2 className="mb-2 text-2xl font-semibold">
+                Modular units, garden studios and compact rentals
+              </h2>
+
+              <p className="leading-7 text-[#555]">
+                ModRent brings together modular and garden unit rentals
+                from across Ireland in one focused platform, making it
+                easier for owners and renters to understand available
+                options.
+              </p>
+
             </div>
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="text-sm bg-[#f3efe7] px-3 py-1 rounded-full">
-                Modular unit
+            <div className="mb-4 flex flex-wrap gap-2">
+
+              <span className="rounded-full bg-[#f3efe7] px-3 py-1 text-sm">
+                Modular units
               </span>
-              <span className="text-sm bg-[#f3efe7] px-3 py-1 rounded-full">
-                Private access
+
+              <span className="rounded-full bg-[#f3efe7] px-3 py-1 text-sm">
+                Garden studios
               </span>
-              <span className="text-sm bg-[#f3efe7] px-3 py-1 rounded-full">
-                Self-contained
+
+              <span className="rounded-full bg-[#f3efe7] px-3 py-1 text-sm">
+                Self-contained spaces
               </span>
+
             </div>
 
             <a
               href="/listings"
-              className="inline-block text-sm font-medium underline underline-offset-4"
+              style={{
+                color: "#1f1f1f",
+                fontWeight: 600,
+                textDecoration: "underline",
+                textUnderlineOffset: "4px",
+              }}
             >
-              View available rentals
+              Browse current listings
             </a>
+
           </div>
+
         </div>
       </section>
+
+      {/* WHY MODRENT SECTION */}
+
+      <section className="border-y border-[#e3ddd2] bg-white">
+
+        <div className="mx-auto max-w-6xl px-6 py-16">
+
+          <div className="max-w-3xl">
+
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#777]">
+              Why ModRent exists
+            </p>
+
+            <h2 className="mb-6 text-4xl font-semibold tracking-tight text-[#111827]">
+              A focused platform for a new Irish rental category.
+            </h2>
+
+            <p className="mb-6 text-lg leading-8 text-[#555]">
+              Modular garden units may offer homeowners a practical way
+              to create additional accommodation, while giving renters
+              access to a different type of small, self-contained living space.
+            </p>
+
+            <p className="text-lg leading-8 text-[#555]">
+              ModRent keeps this category separate from standard house shares,
+              apartment rentals and holiday lets, so listings can be easier
+              to find, understand and compare.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
     </main>
   );
 }
