@@ -16,6 +16,7 @@ type Listing = {
   photos: string[] | null;
   description: string | null;
   email: string | null;
+  status: string | null;
 };
 
 export default function ListingsPage() {
@@ -29,6 +30,7 @@ export default function ListingsPage() {
       const { data, error } = await supabase
         .from("listings")
         .select("*")
+        .or("status.eq.active,status.is.null")
         .order("id", { ascending: false });
 
       if (error) {
@@ -176,9 +178,7 @@ export default function ListingsPage() {
           </div>
         ) : filteredListings.length === 0 ? (
           <div className="rounded-3xl border border-[#e3ddd2] bg-white p-10 shadow-sm">
-            <h2 className="mb-3 text-2xl font-semibold">
-              No listings found
-            </h2>
+            <h2 className="mb-3 text-2xl font-semibold">No listings found</h2>
 
             <p className="mb-6 max-w-2xl leading-7 text-[#555]">
               There are currently no listings matching your search. Try changing
