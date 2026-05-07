@@ -1,4 +1,4 @@
-"use client";
+       "use client";
 
 import { useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
@@ -16,6 +16,10 @@ type Listing = {
   photos: string[] | null;
   description: string | null;
   email: string | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  bills_included: boolean | null;
+  pet_friendly: boolean | null;
 };
 
 export default function ListingDetailClient({
@@ -161,6 +165,40 @@ export default function ListingDetailClient({
                 {listing.rent && (
                   <p className="text-sm text-[#666]">per month</p>
                 )}
+              </div>
+            </div>
+
+            <div className="mb-8 grid gap-4 md:grid-cols-4">
+              <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
+                <p className="mb-1 text-sm text-[#666]">Bedrooms</p>
+                <p className="font-semibold">
+                  {listing.bedrooms !== null && listing.bedrooms !== undefined
+                    ? listing.bedrooms
+                    : "Not specified"}
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
+                <p className="mb-1 text-sm text-[#666]">Bathrooms</p>
+                <p className="font-semibold">
+                  {listing.bathrooms !== null && listing.bathrooms !== undefined
+                    ? listing.bathrooms
+                    : "Not specified"}
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
+                <p className="mb-1 text-sm text-[#666]">Bills</p>
+                <p className="font-semibold">
+                  {listing.bills_included ? "Included" : "Not specified"}
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
+                <p className="mb-1 text-sm text-[#666]">Pets</p>
+                <p className="font-semibold">
+                  {listing.pet_friendly ? "Pet friendly" : "Not specified"}
+                </p>
               </div>
             </div>
 

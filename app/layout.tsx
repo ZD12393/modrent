@@ -3,48 +3,9 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://modrent.vercel.app"),
-  title: {
-    default: "ModRent | Modular Home & Garden Unit Rentals in Ireland",
-    template: "%s | ModRent",
-  },
+  title: "ModRent",
   description:
-    "ModRent is an Irish rental marketplace for modular homes, garden units, backyard studios and small standalone rental spaces.",
-  keywords: [
-    "modular home rental Ireland",
-    "garden unit rental Ireland",
-    "garden studio to rent",
-    "backyard studio rental",
-    "modular rental Ireland",
-    "self contained garden room Ireland",
-    "tiny home rental Ireland",
-    "Rent-a-Room Relief Ireland",
-    "planning exemption modular home Ireland",
-  ],
-  openGraph: {
-    title: "ModRent | Modular Home & Garden Unit Rentals in Ireland",
-    description:
-      "Browse and list modular homes, garden units, backyard studios and small standalone rental spaces across Ireland.",
-    url: "https://modrent.vercel.app",
-    siteName: "ModRent",
-    images: [
-      {
-        url: "/modular-unit.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Modular garden unit listed on ModRent",
-      },
-    ],
-    locale: "en_IE",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "ModRent | Modular Home & Garden Unit Rentals in Ireland",
-    description:
-      "Irish rental marketplace for modular homes, garden units and backyard studios.",
-    images: ["/modular-unit.jpg"],
-  },
+    "Irish rental marketplace for modular homes, garden units and backyard studios.",
 };
 
 export default function RootLayout({
@@ -53,8 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-IE">
+    <html lang="en">
       <body className="flex min-h-screen flex-col bg-[#f8f7f4] text-[#111827]">
+        {/* HEADER */}
+
         <header className="border-b border-[#d6d3cc] bg-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
             <Link
@@ -103,7 +66,11 @@ export default function RootLayout({
           </div>
         </header>
 
+        {/* PAGE CONTENT */}
+
         <main className="flex-1">{children}</main>
+
+        {/* FOOTER */}
 
         <footer className="mt-20 border-t border-[#d6d3cc] bg-white">
           <div className="mx-auto max-w-7xl px-6 py-12">
@@ -119,12 +86,21 @@ export default function RootLayout({
                   rental spaces.
                 </p>
 
-                <p className="text-sm leading-6 text-[#6b7280]">
-                  ModRent provides a listing platform only and does not provide
-                  legal, tax, planning or building compliance advice. Property
-                  owners remain responsible for ensuring compliance with
-                  applicable laws, regulations and safety requirements.
-                </p>
+                <div className="space-y-4 text-sm leading-6 text-[#6b7280]">
+                  <p>
+                    ModRent provides a listing platform only and does not
+                    provide legal, tax, planning or building compliance advice.
+                    Property owners remain responsible for ensuring compliance
+                    with applicable laws, regulations and safety requirements.
+                  </p>
+
+                  <p>
+                    Need to edit or remove your listing? Please contact
+                    hello@modrent.ie using the same email address used when
+                    submitting the listing and include the listing title or
+                    location details.
+                  </p>
+                </div>
               </div>
 
               <div>

@@ -15,6 +15,7 @@ type Listing = {
   photos: string[] | null;
   description: string | null;
   email: string | null;
+  status: string | null;
 };
 
 async function getListing(id: string): Promise<Listing | null> {
@@ -22,10 +23,13 @@ async function getListing(id: string): Promise<Listing | null> {
     .from("listings")
     .select("*")
     .eq("id", Number(id))
-    .or("status.eq.active,status.is.null")
     .single();
 
   if (error || !data) {
+    return null;
+  }
+
+  if (data.status === "hidden") {
     return null;
   }
 
@@ -35,9 +39,10 @@ async function getListing(id: string): Promise<Listing | null> {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const listing = await getListing(params.id);
+  const resolvedParams = await params;
+  const listing = await getListing(resolvedParams.id);
 
   if (!listing) {
     return {
@@ -54,10 +59,15 @@ export async function generateMetadata({
 
   const description =
     listing.description?.slice(0, 150) ||
-    `Browse this ${listing.unit_type || "modular rental"} in ${location} on ModRent.`;
+    `Browse this ${
+      listing.unit_type || "modular rental"
+    } in ${location} on ModRent.`;
 
   const image =
-    listing.banner_image_url || listing.image_url || listing.photos?.[0] || "/modular-unit.jpg";
+    listing.banner_image_url ||
+    listing.image_url ||
+    listing.photos?.[0] ||
+    "/modular-unit.jpg";
 
   return {
     title,
@@ -90,9 +100,10 @@ export async function generateMetadata({
 export default async function ListingPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const listing = await getListing(params.id);
+  const resolvedParams = await params;
+  const listing = await getListing(resolvedParams.id);
 
   if (!listing) {
     return (

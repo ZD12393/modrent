@@ -142,34 +142,6 @@ export default function ListingsPage() {
               </select>
             </div>
           </div>
-
-          {(searchTerm || selectedCounty !== "All Counties") && (
-            <div className="mt-4 flex flex-col gap-3 border-t border-[#e3ddd2] pt-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-[#666]">
-                Showing {filteredListings.length} matching listing
-                {filteredListings.length === 1 ? "" : "s"}.
-              </p>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedCounty("All Counties");
-                }}
-                style={{
-                  backgroundColor: "#f6f4ef",
-                  color: "#1f1f1f",
-                  padding: "10px 16px",
-                  borderRadius: "12px",
-                  border: "1px solid #d7d2c8",
-                  display: "inline-block",
-                  fontWeight: 600,
-                }}
-              >
-                Clear filters
-              </button>
-            </div>
-          )}
         </div>
 
         {loading ? (
