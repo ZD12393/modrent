@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Turnstile from "react-turnstile";
 import { supabase } from "@/lib/supabase";
 
 type Listing = {
@@ -34,6 +35,7 @@ export default function ListingDetailClient({
   const [showForm, setShowForm] = useState(false);
   const [senderEmail, setSenderEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [sending, setSending] = useState(false);
 
   const galleryImages = useMemo(() => {
@@ -64,6 +66,11 @@ export default function ListingDetailClient({
       return;
     }
 
+    if (!turnstileToken) {
+      alert("Please complete the security check before sending your message.");
+      return;
+    }
+
     setSending(true);
 
     const { error: saveError } = await supabase.from("messages").insert([
@@ -90,6 +97,7 @@ export default function ListingDetailClient({
         listingTitle: listing.title,
         renterEmail: senderEmail,
         renterMessage: message,
+        turnstileToken,
       }),
     });
 
@@ -104,6 +112,7 @@ export default function ListingDetailClient({
     alert("Message sent.");
     setSenderEmail("");
     setMessage("");
+    setTurnstileToken("");
     setShowForm(false);
     setSending(false);
   };
@@ -330,6 +339,14 @@ export default function ListingDetailClient({
                     className="h-32 w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
                   />
                 </div>
+
+                <Turnstile
+                  sitekey={
+                    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
+                  }
+                  onVerify={(token) => setTurnstileToken(token)}
+                  onExpire={() => setTurnstileToken("")}
+                />
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <button
