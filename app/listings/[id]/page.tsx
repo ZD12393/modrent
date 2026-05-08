@@ -16,14 +16,24 @@ type Listing = {
   description: string | null;
   email: string | null;
   status: string | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  bills_included: boolean | null;
+  pet_friendly: boolean | null;
 };
 
 async function getListing(id: string): Promise<Listing | null> {
+  const listingId = Number(id);
+
+  if (!listingId) {
+    return null;
+  }
+
   const { data, error } = await supabase
     .from("listings")
     .select("*")
-    .eq("id", Number(id))
-    .single();
+    .eq("id", listingId)
+    .maybeSingle();
 
   if (error || !data) {
     return null;
@@ -33,7 +43,7 @@ async function getListing(id: string): Promise<Listing | null> {
     return null;
   }
 
-  return data;
+  return data as Listing;
 }
 
 export async function generateMetadata({
@@ -46,7 +56,7 @@ export async function generateMetadata({
 
   if (!listing) {
     return {
-      title: "Listing Not Found",
+      title: "Listing Not Found | ModRent",
       description: "This ModRent listing could not be found.",
     };
   }
@@ -75,7 +85,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://modrent.vercel.app/listings/${listing.id}`,
+      url: `https://modrent.ie/listings/${listing.id}`,
       siteName: "ModRent",
       images: [
         {
