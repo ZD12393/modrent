@@ -16,8 +16,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col bg-[#f8f7f4] text-[#111827]">
-        {/* HEADER */}
-
         <header className="border-b border-[#d6d3cc] bg-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
             <Link
@@ -62,15 +60,18 @@ export default function RootLayout({
               >
                 Legal
               </Link>
+
+              <Link
+                href="/contact"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
+                Contact
+              </Link>
             </nav>
           </div>
         </header>
 
-        {/* PAGE CONTENT */}
-
         <main className="flex-1">{children}</main>
-
-        {/* FOOTER */}
 
         <footer className="mt-20 border-t border-[#d6d3cc] bg-white">
           <div className="mx-auto max-w-7xl px-6 py-12">
@@ -142,6 +143,27 @@ export default function RootLayout({
                     className="text-[#4b5563] transition hover:text-[#111827]"
                   >
                     Legal & Compliance
+                  </Link>
+
+                  <Link
+                    href="/terms"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
+                    Terms of Use
+                  </Link>
+
+                  <Link
+                    href="/privacy"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
+                    Privacy Policy
+                  </Link>
+
+                  <Link
+                    href="/contact"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
+                    Contact
                   </Link>
                 </div>
               </div>

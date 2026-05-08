@@ -95,28 +95,6 @@ export default function CreatePage() {
     setBannerIndex(0);
   };
 
-  const uploadPhoto = async (photo: File) => {
-    const fileExt = photo.name.split(".").pop();
-    const fileName = `${Date.now()}-${Math.random()
-      .toString(36)
-      .slice(2)}.${fileExt}`;
-    const filePath = `listings/${fileName}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from("listing-photos")
-      .upload(filePath, photo);
-
-    if (uploadError) {
-      throw new Error(uploadError.message);
-    }
-
-    const { data } = supabase.storage
-      .from("listing-photos")
-      .getPublicUrl(filePath);
-
-    return data.publicUrl;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -133,9 +111,31 @@ export default function CreatePage() {
     setSaving(true);
 
     try {
-      const uploadedPhotoUrls = await Promise.all(
-        photos.map((photo) => uploadPhoto(photo))
-      );
+      const uploadedPhotoUrls: string[] = [];
+
+      for (const photo of photos) {
+        const fileExt = photo.name.split(".").pop();
+        const fileName = `${Date.now()}-${Math.random()
+          .toString(36)
+          .slice(2)}.${fileExt}`;
+        const filePath = `listings/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("listing-photos")
+          .upload(filePath, photo);
+
+        if (uploadError) {
+          alert(`Photo upload failed: ${uploadError.message}`);
+          setSaving(false);
+          return;
+        }
+
+        const { data } = supabase.storage
+          .from("listing-photos")
+          .getPublicUrl(filePath);
+
+        uploadedPhotoUrls.push(data.publicUrl);
+      }
 
       const bannerImageUrl =
         uploadedPhotoUrls[bannerIndex] || uploadedPhotoUrls[0] || "";
@@ -157,7 +157,7 @@ export default function CreatePage() {
           banner_image_url: bannerImageUrl,
           description,
           email,
-          status: "active",
+          status: "pending",
         },
       ]);
 
@@ -167,7 +167,9 @@ export default function CreatePage() {
         return;
       }
 
-      alert("Listing saved.");
+      alert(
+        "Listing submitted for review. It will appear publicly once approved by ModRent."
+      );
 
       setUnitType("");
       setTown("");
@@ -182,12 +184,8 @@ export default function CreatePage() {
       setBannerIndex(0);
       setDescription("");
       setEmail("");
-    } catch (error) {
-      alert(
-        `Photo upload failed: ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
-      );
+    } catch {
+      alert("Something went wrong while saving the listing.");
     }
 
     setSaving(false);
@@ -204,8 +202,8 @@ export default function CreatePage() {
           <h1 className="mb-4 text-5xl font-semibold">List Your Unit</h1>
 
           <p className="text-lg leading-8 text-[#555]">
-            Add a modular home, garden unit or self-contained rental space to
-            ModRent.
+            Submit your modular home, garden unit or self-contained rental space
+            for review before publication on ModRent.
           </p>
         </div>
 
@@ -348,7 +346,6 @@ export default function CreatePage() {
                 checked={billsIncluded}
                 onChange={(e) => setBillsIncluded(e.target.checked)}
               />
-
               <span className="font-medium">Bills included</span>
             </label>
 
@@ -358,7 +355,6 @@ export default function CreatePage() {
                 checked={petFriendly}
                 onChange={(e) => setPetFriendly(e.target.checked)}
               />
-
               <span className="font-medium">Pet friendly</span>
             </label>
           </div>
@@ -378,8 +374,7 @@ export default function CreatePage() {
 
             <p className="mt-2 text-sm leading-6 text-[#666]">
               Upload up to {MAX_PHOTOS} clear photos. Each photo must be under{" "}
-              {MAX_FILE_SIZE_MB}MB. After selecting photos, choose which one
-              should appear as the main banner image.
+              {MAX_FILE_SIZE_MB}MB.
             </p>
           </div>
 
@@ -465,7 +460,7 @@ export default function CreatePage() {
               opacity: saving ? 0.6 : 1,
             }}
           >
-            {saving ? "Uploading photos and saving..." : "Submit Listing"}
+            {saving ? "Saving..." : "Submit for Review"}
           </button>
         </form>
       </section>

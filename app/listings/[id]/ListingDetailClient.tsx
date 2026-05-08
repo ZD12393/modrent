@@ -1,4 +1,4 @@
-       "use client";
+"use client";
 
 import { useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
@@ -59,9 +59,14 @@ export default function ListingDetailClient({
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!listing.email) {
+      alert("This listing does not have a contact email.");
+      return;
+    }
+
     setSending(true);
 
-    const { error } = await supabase.from("messages").insert([
+    const { error: saveError } = await supabase.from("messages").insert([
       {
         listing_id: listing.id,
         sender_email: senderEmail,
@@ -69,8 +74,29 @@ export default function ListingDetailClient({
       },
     ]);
 
-    if (error) {
-      alert(`There was a problem sending the message: ${error.message}`);
+    if (saveError) {
+      alert(`There was a problem saving the message: ${saveError.message}`);
+      setSending(false);
+      return;
+    }
+
+    const emailResponse = await fetch("/api/send-enquiry", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ownerEmail: listing.email,
+        listingTitle: listing.title,
+        renterEmail: senderEmail,
+        renterMessage: message,
+      }),
+    });
+
+    if (!emailResponse.ok) {
+      alert(
+        "Your message was saved, but there was a problem sending the email notification."
+      );
       setSending(false);
       return;
     }
