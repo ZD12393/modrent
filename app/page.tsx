@@ -9,22 +9,24 @@ export default function Home() {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
               <div className="mb-6 inline-block rounded-full border border-[#d8cdbb] bg-[#fffdf8] px-4 py-2 text-sm font-semibold text-[#244e3b] shadow-sm">
-                Ireland’s modular rental marketplace
+                Ireland’s dedicated modular rental marketplace
               </div>
 
               <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tight text-[#173528] md:text-6xl">
-                Find and list modular garden rentals across Ireland.
+                A dedicated Irish marketplace for modular rentals, garden cabins
+                and standalone accommodation.
               </h1>
 
               <p className="mb-6 max-w-xl text-lg leading-8 text-[#4f5f55] md:text-xl">
-                ModRent is a dedicated Irish platform for modular homes, garden
-                units, backyard studios and self-contained rental spaces.
+                ModRent is a specialist Irish platform for modular homes,
+                garden cabins, detached studios and other self-contained rental
+                spaces.
               </p>
 
               <p className="mb-8 max-w-xl text-base leading-8 text-[#5f6b63]">
-                Built for homeowners, renters and small accommodation providers,
-                ModRent makes this emerging rental category easier to discover,
-                compare and manage responsibly.
+                Created in response to Ireland’s changing approach to detached
+                modular accommodation, ModRent gives this emerging rental
+                category a dedicated place to be discovered.
               </p>
 
               <div className="flex flex-col gap-4 sm:flex-row">
@@ -68,28 +70,34 @@ export default function Home() {
               <div className="mt-8 grid max-w-xl gap-3 sm:grid-cols-3">
                 <div className="rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-4">
                   <p className="text-sm font-semibold text-[#244e3b]">
-                    Free to list
+                    Free during launch
                   </p>
+
                   <p className="mt-1 text-sm leading-6 text-[#5f6b63]">
-                    Launch listings are reviewed before going live.
+                    Suitable listings can currently be submitted at no cost
+                    while the platform grows.
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-4">
                   <p className="text-sm font-semibold text-[#244e3b]">
-                    Focused niche
+                    Built for this category
                   </p>
+
                   <p className="mt-1 text-sm leading-6 text-[#5f6b63]">
-                    Built specifically for standalone small rental spaces.
+                    Modular rentals and standalone accommodation deserve their
+                    own dedicated marketplace.
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-4">
                   <p className="text-sm font-semibold text-[#244e3b]">
-                    Ireland-first
+                    Designed for Ireland
                   </p>
+
                   <p className="mt-1 text-sm leading-6 text-[#5f6b63]">
-                    Designed around the Irish rental and planning context.
+                    Built around the Irish planning, rental and compliance
+                    landscape.
                   </p>
                 </div>
               </div>
@@ -111,18 +119,18 @@ export default function Home() {
                   </span>
 
                   <span className="rounded-full bg-[#f0dfc7] px-3 py-1 text-sm font-semibold text-[#7a4a1f]">
-                    Garden studios
+                    Garden cabins
                   </span>
                 </div>
 
                 <h2 className="mb-3 text-2xl font-bold text-[#173528]">
-                  A clearer place for compact rental spaces
+                  A better home for modular and standalone rentals
                 </h2>
 
                 <p className="leading-7 text-[#5f6b63]">
-                  Instead of mixing garden units with house shares, holiday lets
-                  and apartments, ModRent gives this category its own focused
-                  home.
+                  Instead of getting buried among apartments, house shares and
+                  holiday lets, modular accommodation and detached rental spaces
+                  finally have a platform built specifically for them.
                 </p>
               </div>
 
@@ -147,39 +155,43 @@ export default function Home() {
           <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
               <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#c9823a]">
-                Why ModRent exists
+                Why ModRent was created
               </p>
 
               <h2 className="mb-6 text-3xl font-bold tracking-tight text-[#173528] md:text-4xl">
-                A dedicated platform for a new Irish rental category.
+                A dedicated marketplace for an emerging Irish rental opportunity.
               </h2>
 
               <div className="space-y-5 text-lg leading-8 text-[#5f6b63]">
                 <p>
-                  Modular garden units may offer homeowners a practical way to
-                  create additional accommodation, while giving renters access
-                  to a different type of small, self-contained living space.
+                  Recent Government proposals have significantly increased
+                  interest in detached modular accommodation, garden cabins and
+                  other standalone rental spaces as potential income-generating
+                  assets.
                 </p>
 
                 <p>
-                  ModRent keeps this category separate from standard house
-                  shares, apartment rentals and holiday lets, so suitable
-                  listings are easier to find and understand.
+                  ModRent was created to give this category a dedicated
+                  marketplace, rather than forcing owners and renters to use
+                  platforms built for completely different types of
+                  accommodation.
                 </p>
               </div>
             </div>
 
             <div className="rounded-[28px] bg-[#244e3b] p-7 text-white shadow-sm">
               <h3 className="mb-4 text-2xl font-bold">
-                For owners and renters
+                Built for owners and renters
               </h3>
 
               <ul className="space-y-4 leading-7 text-[#eef5ef]">
-                <li>List suitable units for review before publication.</li>
-                <li>Browse standalone modular and garden rental spaces.</li>
-                <li>Send enquiries directly through the platform.</li>
+                <li>List suitable modular or standalone rental spaces</li>
                 <li>
-                  Access clear compliance reminders before making decisions.
+                  Browse a category often overlooked by larger rental platforms
+                </li>
+                <li>Connect directly through simple enquiry tools</li>
+                <li>
+                  Access clear reminders around owner compliance responsibilities
                 </li>
               </ul>
 
@@ -196,7 +208,7 @@ export default function Home() {
                   textDecoration: "none",
                 }}
               >
-                Submit a listing
+                List your property
               </a>
             </div>
           </div>
