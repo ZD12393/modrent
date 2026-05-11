@@ -43,7 +43,7 @@ export async function POST(req: Request) {
     }
 
     const { error } = await resend.emails.send({
-      from: "ModRent <onboarding@resend.dev>",
+      from: "ModRent <hello@modrent.ie>",
       to: ownerEmail,
       subject: `New enquiry for your ModRent listing: ${listingTitle}`,
       html: `
