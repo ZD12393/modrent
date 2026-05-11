@@ -35,7 +35,7 @@ export default function RootLayout({
         </Script>
 
         <header className="border-b border-[#d6d3cc] bg-white">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 md:px-6">
             <Link
               href="/"
               className="text-2xl font-bold tracking-tight text-[#111827]"
@@ -43,7 +43,7 @@ export default function RootLayout({
               ModRent
             </Link>
 
-            <nav className="flex items-center gap-6 text-sm font-medium">
+            <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
               <Link
                 href="/"
                 className="text-[#111827] transition hover:text-[#4b5563]"
