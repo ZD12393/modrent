@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "ModRent",
   description:
     "Irish rental marketplace for modular homes, garden units and backyard studios.",
+ verification: {
+    google: "Y058yPX0i7KhcQXkHoZpsh5hhzrz5umVn9ntatExW78",
+  },
 };
 
 export default function RootLayout({
