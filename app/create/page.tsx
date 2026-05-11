@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Turnstile from "react-turnstile";
 import { supabase } from "@/lib/supabase";
 
 const unitTypes = [
@@ -58,6 +59,7 @@ export default function CreatePage() {
   const [bannerIndex, setBannerIndex] = useState(0);
   const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [saving, setSaving] = useState(false);
 
   const generatedTitle = useMemo(() => {
@@ -95,6 +97,18 @@ export default function CreatePage() {
     setBannerIndex(0);
   };
 
+  const verifyTurnstile = async () => {
+    const response = await fetch("/api/verify-turnstile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ turnstileToken }),
+    });
+
+    return response.ok;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -108,7 +122,20 @@ export default function CreatePage() {
       return;
     }
 
+    if (!turnstileToken) {
+      alert("Please complete the security check before submitting your listing.");
+      return;
+    }
+
     setSaving(true);
+
+    const securityCheckPassed = await verifyTurnstile();
+
+    if (!securityCheckPassed) {
+      alert("Security check failed. Please refresh the page and try again.");
+      setSaving(false);
+      return;
+    }
 
     try {
       const uploadedPhotoUrls: string[] = [];
@@ -184,6 +211,7 @@ export default function CreatePage() {
       setBannerIndex(0);
       setDescription("");
       setEmail("");
+      setTurnstileToken("");
     } catch {
       alert("Something went wrong while saving the listing.");
     }
@@ -446,6 +474,12 @@ export default function CreatePage() {
               className="h-40 w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
             />
           </div>
+
+          <Turnstile
+            sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+            onVerify={(token) => setTurnstileToken(token)}
+            onExpire={() => setTurnstileToken("")}
+          />
 
           <button
             type="submit"
