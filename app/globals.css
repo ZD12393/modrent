@@ -1,11 +1,23 @@
 @import "tailwindcss";
 
+:root {
+  --modrent-bg: #f7f3ea;
+  --modrent-card: #fffdf8;
+  --modrent-text: #1f2933;
+  --modrent-muted: #5f6b63;
+  --modrent-primary: #244e3b;
+  --modrent-primary-dark: #173528;
+  --modrent-accent: #c9823a;
+  --modrent-border: #d8cdbb;
+  --modrent-soft-green: #e6efe8;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
-  background: #f7f7f7;
-  color: #111111;
+  background: var(--modrent-bg);
+  color: var(--modrent-text);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -16,4 +28,16 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--modrent-primary);
+  color: white;
 }
