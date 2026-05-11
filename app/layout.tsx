@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import Link from "next/link";
 import "./globals.css";
 
@@ -7,9 +6,6 @@ export const metadata: Metadata = {
   title: "ModRent",
   description:
     "Irish rental marketplace for modular homes, garden units and backyard studios.",
- verification: {
-    google: "Y058yPX0i7KhcQXkHoZpsh5hhzrz5umVn9ntatExW78",
-  },
 };
 
 export default function RootLayout({
@@ -20,20 +16,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col bg-[#f8f7f4] text-[#111827]">
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-KF6D5FKRR0"
-          strategy="afterInteractive"
-        />
-
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-KF6D5FKRR0');
-          `}
-        </Script>
-
         <header className="border-b border-[#d6d3cc] bg-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 md:px-6">
             <Link
@@ -100,8 +82,8 @@ export default function RootLayout({
                 </h2>
 
                 <p className="mb-4 text-base leading-7 text-[#4b5563]">
-                  ModRent is an Irish rental marketplace focused on modular
-                  homes, garden units, backyard studios and small standalone
+                  ModRent is a specialist Irish rental marketplace focused on
+                  modular homes, garden cabins, detached studios and standalone
                   rental spaces.
                 </p>
 
@@ -118,6 +100,37 @@ export default function RootLayout({
                     hello@modrent.ie using the same email address used when
                     submitting the listing and include the listing title or
                     location details.
+                  </p>
+                </div>
+
+                <div className="mt-6 rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-5">
+                  <h3 className="mb-2 text-base font-semibold text-[#173528]">
+                    Stay updated
+                  </h3>
+
+                  <p className="mb-4 text-sm leading-6 text-[#5f6b63]">
+                    Receive occasional updates about new listings and ModRent
+                    news.
+                  </p>
+
+                  <form className="flex flex-col gap-3 sm:flex-row">
+                    <input
+                      type="email"
+                      placeholder="Your email address"
+                      className="flex-1 rounded-xl border border-[#d8cdbb] px-4 py-3 outline-none focus:border-[#244e3b]"
+                    />
+
+                    <button
+                      type="submit"
+                      className="rounded-xl bg-[#244e3b] px-5 py-3 font-semibold text-white"
+                    >
+                      Subscribe
+                    </button>
+                  </form>
+
+                  <p className="mt-3 text-xs leading-5 text-[#6b7280]">
+                    By subscribing, you agree to receive occasional emails from
+                    ModRent.
                   </p>
                 </div>
               </div>

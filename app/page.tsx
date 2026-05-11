@@ -70,12 +70,11 @@ export default function Home() {
               <div className="mt-8 grid max-w-xl gap-3 sm:grid-cols-3">
                 <div className="rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-4">
                   <p className="text-sm font-semibold text-[#244e3b]">
-                    Free during launch
+                    Free standard listings
                   </p>
 
                   <p className="mt-1 text-sm leading-6 text-[#5f6b63]">
-                    Suitable listings can currently be submitted at no cost
-                    while the platform grows.
+                    Owners can list suitable units and receive direct enquiries at no cost.
                   </p>
                 </div>
 
