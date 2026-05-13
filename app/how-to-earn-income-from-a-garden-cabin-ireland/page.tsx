@@ -37,13 +37,11 @@ export default function GardenCabinIncomeIrelandPage() {
             <h2 className="mb-4 text-3xl font-bold text-[#173528]">
               Start with suitability
             </h2>
-
             <p className="leading-8 text-[#5f6b63]">
               Not every garden cabin is suitable for rental use. Before thinking
               about income, owners should consider whether the space is safe,
               comfortable, properly serviced and appropriate for someone to stay
-              in. Heating, ventilation, electricity, water, access, privacy and
-              fire safety all matter.
+              in.
             </p>
           </div>
 
@@ -51,40 +49,20 @@ export default function GardenCabinIncomeIrelandPage() {
             <h2 className="mb-4 text-3xl font-bold text-[#173528]">
               Understand the rules before advertising
             </h2>
-
             <p className="leading-8 text-[#5f6b63]">
               Recent Government proposals have increased interest in detached
-              modular accommodation and rent-a-room relief, but owners should not
-              assume that every cabin automatically qualifies. The position may
-              depend on the final rules, the unit itself, how it is used and
-              whether all relevant conditions are met.
+              modular accommodation, but owners should not assume that every
+              cabin automatically qualifies for any particular treatment.
             </p>
           </div>
 
           <div>
             <h2 className="mb-4 text-3xl font-bold text-[#173528]">
-              Think beyond short-stay rentals
+              Think beyond short-stay platforms
             </h2>
-
             <p className="leading-8 text-[#5f6b63]">
-              Many cabin owners immediately think of short-stay platforms, but
-              medium-term accommodation may be a better fit for some units.
-              Renters may include remote workers, people relocating, contractors,
-              students, professionals on temporary projects or people seeking a
-              smaller self-contained place to stay.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="mb-4 text-3xl font-bold text-[#173528]">
-              Present the unit clearly
-            </h2>
-
-            <p className="leading-8 text-[#5f6b63]">
-              Good photos, clear pricing, honest descriptions and practical
-              details help renters understand whether the space is right for
-              them. Owners should explain the location, access, utilities,
-              parking, internet, heating, bills and any house rules.
+              Some owners may prefer medium-term rentals for professionals,
+              contractors, students or people relocating.
             </p>
           </div>
 
@@ -92,12 +70,9 @@ export default function GardenCabinIncomeIrelandPage() {
             <h2 className="mb-4 text-3xl font-bold text-[#173528]">
               Use a platform built for this category
             </h2>
-
             <p className="leading-8 text-[#5f6b63]">
-              Garden cabins and modular units can get lost on larger platforms
-              designed for apartments, house shares or holiday lets. ModRent was
-              created to give these standalone rental spaces a dedicated Irish
-              marketplace.
+              Garden cabins and modular units can get lost on larger rental
+              websites. ModRent was created specifically for this category.
             </p>
           </div>
 
@@ -107,9 +82,7 @@ export default function GardenCabinIncomeIrelandPage() {
             </h2>
 
             <p className="mb-6 leading-8 text-[#eef5ef]">
-              Submit your suitable garden cabin, modular unit or standalone
-              rental space to ModRent for review. Standard listings and direct
-              enquiries are free.
+              Submit a suitable standalone rental space to ModRent for review.
             </p>
 
             <a
