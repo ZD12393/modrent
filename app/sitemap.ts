@@ -53,10 +53,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-  url: `${baseUrl}/rent-a-room-relief-modular-units-ireland`,
-  lastModified: new Date(),
-  changeFrequency: "monthly",
-  priority: 0.85,
-},
+      url: `${baseUrl}/can-i-rent-out-a-log-cabin-in-ireland`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/rent-a-room-relief-modular-units-ireland`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
   ];
 }
