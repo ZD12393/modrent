@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
 import "./globals.css";
 import SubscribeForm from "@/components/SubscribeForm";
 
@@ -17,55 +18,43 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col bg-[#f8f7f4] text-[#111827]">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-BQGY98MD73"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-BQGY98MD73');
+          `}
+        </Script>
+
         <header className="border-b border-[#d6d3cc] bg-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 md:px-6">
-            <Link
-              href="/"
-              className="text-2xl font-bold tracking-tight text-[#111827]"
-            >
+            <Link href="/" className="text-2xl font-bold tracking-tight text-[#111827]">
               ModRent
             </Link>
 
             <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-              <Link
-                href="/"
-                className="text-[#111827] transition hover:text-[#4b5563]"
-              >
+              <Link href="/" className="text-[#111827] transition hover:text-[#4b5563]">
                 Home
               </Link>
-
-              <Link
-                href="/listings"
-                className="text-[#111827] transition hover:text-[#4b5563]"
-              >
+              <Link href="/listings" className="text-[#111827] transition hover:text-[#4b5563]">
                 Browse Rentals
               </Link>
-
-              <Link
-                href="/create"
-                className="text-[#111827] transition hover:text-[#4b5563]"
-              >
+              <Link href="/create" className="text-[#111827] transition hover:text-[#4b5563]">
                 List Your Unit
               </Link>
-
-              <Link
-                href="/faq"
-                className="text-[#111827] transition hover:text-[#4b5563]"
-              >
+              <Link href="/faq" className="text-[#111827] transition hover:text-[#4b5563]">
                 FAQ
               </Link>
-
-              <Link
-                href="/legal"
-                className="text-[#111827] transition hover:text-[#4b5563]"
-              >
+              <Link href="/legal" className="text-[#111827] transition hover:text-[#4b5563]">
                 Legal
               </Link>
-
-              <Link
-                href="/contact"
-                className="text-[#111827] transition hover:text-[#4b5563]"
-              >
+              <Link href="/contact" className="text-[#111827] transition hover:text-[#4b5563]">
                 Contact
               </Link>
             </nav>
@@ -113,59 +102,28 @@ export default function RootLayout({
                 </h3>
 
                 <div className="flex flex-col gap-3 text-sm">
-                  <Link
-                    href="/"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/" className="text-[#4b5563] transition hover:text-[#111827]">
                     Home
                   </Link>
-
-                  <Link
-                    href="/listings"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/listings" className="text-[#4b5563] transition hover:text-[#111827]">
                     Browse Rentals
                   </Link>
-
-                  <Link
-                    href="/create"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/create" className="text-[#4b5563] transition hover:text-[#111827]">
                     List Your Unit
                   </Link>
-
-                  <Link
-                    href="/faq"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/faq" className="text-[#4b5563] transition hover:text-[#111827]">
                     FAQ
                   </Link>
-
-                  <Link
-                    href="/legal"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/legal" className="text-[#4b5563] transition hover:text-[#111827]">
                     Legal & Compliance
                   </Link>
-
-                  <Link
-                    href="/terms"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/terms" className="text-[#4b5563] transition hover:text-[#111827]">
                     Terms of Use
                   </Link>
-
-                  <Link
-                    href="/privacy"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/privacy" className="text-[#4b5563] transition hover:text-[#111827]">
                     Privacy Policy
                   </Link>
-
-                  <Link
-                    href="/contact"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/contact" className="text-[#4b5563] transition hover:text-[#111827]">
                     Contact
                   </Link>
                 </div>
@@ -177,31 +135,16 @@ export default function RootLayout({
                 </h3>
 
                 <div className="flex flex-col gap-3 text-sm leading-6">
-                  <Link
-                    href="/can-i-rent-out-a-log-cabin-in-ireland"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/can-i-rent-out-a-log-cabin-in-ireland" className="text-[#4b5563] transition hover:text-[#111827]">
                     Can I rent out a log cabin in Ireland?
                   </Link>
-
-                  <Link
-                    href="/rent-a-room-relief-modular-units-ireland"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/rent-a-room-relief-modular-units-ireland" className="text-[#4b5563] transition hover:text-[#111827]">
                     Rent-a-Room Relief and modular units
                   </Link>
-
-                  <Link
-                    href="/how-to-earn-income-from-a-garden-cabin-ireland"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
-                  >
+                  <Link href="/how-to-earn-income-from-a-garden-cabin-ireland" className="text-[#4b5563] transition hover:text-[#111827]">
                     How to earn income from a garden cabin
                   </Link>
-
-                  <Link
-                    href="/create"
-                    className="mt-2 inline-block font-semibold text-[#244e3b] underline underline-offset-4"
-                  >
+                  <Link href="/create" className="mt-2 inline-block font-semibold text-[#244e3b] underline underline-offset-4">
                     List your property
                   </Link>
                 </div>
