@@ -74,7 +74,8 @@ export default function Home() {
                   </p>
 
                   <p className="mt-1 text-sm leading-6 text-[#5f6b63]">
-                    Owners can list suitable units and receive direct enquiries at no cost.
+                    Owners can list suitable units and receive direct enquiries
+                    at no cost.
                   </p>
                 </div>
 
@@ -158,7 +159,8 @@ export default function Home() {
               </p>
 
               <h2 className="mb-6 text-3xl font-bold tracking-tight text-[#173528] md:text-4xl">
-                A dedicated marketplace for an emerging Irish rental opportunity.
+                A dedicated marketplace for an emerging Irish rental
+                opportunity.
               </h2>
 
               <div className="space-y-5 text-lg leading-8 text-[#5f6b63]">
@@ -190,7 +192,8 @@ export default function Home() {
                 </li>
                 <li>Connect directly through simple enquiry tools</li>
                 <li>
-                  Access clear reminders around owner compliance responsibilities
+                  Access clear reminders around owner compliance
+                  responsibilities
                 </li>
               </ul>
 
@@ -210,6 +213,126 @@ export default function Home() {
                 List your property
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f7f3ea]">
+        <div className="mx-auto max-w-6xl px-4 py-16 md:px-6">
+          <div className="mb-8 max-w-3xl">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#c9823a]">
+              Owner resources
+            </p>
+
+            <h2 className="mb-4 text-3xl font-bold tracking-tight text-[#173528] md:text-4xl">
+              Practical guides for cabin and modular unit owners
+            </h2>
+
+            <p className="text-lg leading-8 text-[#5f6b63]">
+              These guides are written for owners considering whether a modular
+              unit, garden cabin or detached space could be suitable for rental
+              use. ModRent does not provide legal, tax or planning advice.
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            <a
+              href="/can-i-rent-out-a-log-cabin-in-ireland"
+              className="rounded-[24px] border border-[#d8cdbb] bg-[#fffdf8] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              style={{
+                color: "#1f2933",
+                textDecoration: "none",
+              }}
+            >
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c9823a]">
+                Owner guide
+              </p>
+
+              <h3 className="mb-3 text-xl font-bold text-[#173528]">
+                Can I rent out a log cabin in Ireland?
+              </h3>
+
+              <p className="leading-7 text-[#5f6b63]">
+                A cautious guide for owners thinking about listing a log cabin,
+                garden cabin or detached space.
+              </p>
+            </a>
+
+            <a
+              href="/rent-a-room-relief-modular-units-ireland"
+              className="rounded-[24px] border border-[#d8cdbb] bg-[#fffdf8] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              style={{
+                color: "#1f2933",
+                textDecoration: "none",
+              }}
+            >
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c9823a]">
+                Tax considerations
+              </p>
+
+              <h3 className="mb-3 text-xl font-bold text-[#173528]">
+                Rent-a-Room Relief and modular units in Ireland
+              </h3>
+
+              <p className="leading-7 text-[#5f6b63]">
+                What owners should consider before assuming any tax relief or
+                eligibility position.
+              </p>
+            </a>
+
+            <a
+              href="/how-to-earn-income-from-a-garden-cabin-ireland"
+              className="rounded-[24px] border border-[#d8cdbb] bg-[#fffdf8] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              style={{
+                color: "#1f2933",
+                textDecoration: "none",
+              }}
+            >
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c9823a]">
+                Income planning
+              </p>
+
+              <h3 className="mb-3 text-xl font-bold text-[#173528]">
+                How to earn income from a garden cabin in Ireland
+              </h3>
+
+              <p className="leading-7 text-[#5f6b63]">
+                Practical points to check before treating a garden cabin or
+                detached studio as a rental asset.
+              </p>
+            </a>
+          </div>
+
+          <div className="mt-10 rounded-[28px] bg-[#244e3b] p-7 text-white md:flex md:items-center md:justify-between md:gap-8">
+            <div className="max-w-2xl">
+              <h3 className="mb-3 text-2xl font-bold">
+                Have a suitable cabin or modular unit?
+              </h3>
+
+              <p className="leading-7 text-[#eef5ef]">
+                Owners can submit suitable standalone rental spaces to ModRent
+                for review. Standard listings and direct enquiries are currently
+                free.
+              </p>
+            </div>
+
+            <a
+              href="/create"
+              style={{
+                backgroundColor: "#ffffff",
+                color: "#244e3b",
+                display: "inline-block",
+                marginTop: "24px",
+                padding: "14px 22px",
+                borderRadius: "12px",
+                fontWeight: 700,
+                minWidth: "160px",
+                textAlign: "center",
+                textDecoration: "none",
+              }}
+            >
+              List your property
+            </a>
           </div>
         </div>
       </section>
