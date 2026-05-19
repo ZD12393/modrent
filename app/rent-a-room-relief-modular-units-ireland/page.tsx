@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const metadata = {
   title: "Rent-a-Room Relief and Modular Units in Ireland | ModRent",
   description:
@@ -7,25 +9,25 @@ export const metadata = {
 export default function Page() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="mb-6 text-4xl font-semibold text-[#1f2933]">
+      <h1 className="mb-6 text-4xl font-semibold">
         Rent-a-Room Relief and modular units in Ireland
       </h1>
 
-      <p className="mb-6 text-lg leading-8 text-[#4b5563]">
+      <p className="mb-6 text-lg leading-8 text-neutral-700">
         Recent Government proposals may create opportunities for owners of
         detached modular accommodation, garden cabins and standalone units.
         However, owners should not assume that planning exemptions, tax relief
         or rental eligibility automatically apply.
       </p>
 
-      <p className="mb-10 leading-7 text-[#4b5563]">
+      <p className="mb-10 leading-7 text-neutral-700">
         ModRent is a listing marketplace only. We do not provide legal, tax,
         planning or building regulation advice. Owners should get independent
         professional advice before listing or renting out a unit.
       </p>
 
-      <section className="rounded-3xl bg-[#174f3a] p-8">
-        <h2 className="mb-4 text-2xl font-semibold text-white">
+      <section className="rounded-3xl bg-[#174f3a] p-8 text-white">
+        <h2 className="mb-4 text-2xl font-semibold">
           Have a modular unit or garden cabin?
         </h2>
 
@@ -34,24 +36,12 @@ export default function Page() {
           small standalone rental accommodation in Ireland.
         </p>
 
-        <a
+        <Link
           href="/create"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#ffffff",
-            color: "#0b3325",
-            padding: "16px 24px",
-            borderRadius: "12px",
-            fontWeight: 700,
-            fontSize: "16px",
-            lineHeight: "24px",
-            textDecoration: "none",
-          }}
+          className="inline-flex rounded-xl bg-white px-6 py-4 font-semibold text-[#0b3325]"
         >
           List your property
-        </a>
+        </Link>
       </section>
     </main>
   );
