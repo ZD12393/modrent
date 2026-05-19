@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import SubscribeForm from "@/components/SubscribeForm";
 
 export const metadata: Metadata = {
   title: "ModRent",
@@ -26,27 +27,45 @@ export default function RootLayout({
             </Link>
 
             <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-              <Link href="/" className="text-[#111827] transition hover:text-[#4b5563]">
+              <Link
+                href="/"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 Home
               </Link>
 
-              <Link href="/listings" className="text-[#111827] transition hover:text-[#4b5563]">
+              <Link
+                href="/listings"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 Browse Rentals
               </Link>
 
-              <Link href="/create" className="text-[#111827] transition hover:text-[#4b5563]">
+              <Link
+                href="/create"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 List Your Unit
               </Link>
 
-              <Link href="/faq" className="text-[#111827] transition hover:text-[#4b5563]">
+              <Link
+                href="/faq"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 FAQ
               </Link>
 
-              <Link href="/legal" className="text-[#111827] transition hover:text-[#4b5563]">
+              <Link
+                href="/legal"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 Legal
               </Link>
 
-              <Link href="/contact" className="text-[#111827] transition hover:text-[#4b5563]">
+              <Link
+                href="/contact"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 Contact
               </Link>
             </nav>
@@ -85,36 +104,7 @@ export default function RootLayout({
                   </p>
                 </div>
 
-                <div className="mt-6 rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-5">
-                  <h3 className="mb-2 text-base font-semibold text-[#173528]">
-                    Stay updated
-                  </h3>
-
-                  <p className="mb-4 text-sm leading-6 text-[#5f6b63]">
-                    Receive occasional updates about new listings and ModRent
-                    news.
-                  </p>
-
-                  <form className="flex flex-col gap-3 sm:flex-row">
-                    <input
-                      type="email"
-                      placeholder="Your email address"
-                      className="flex-1 rounded-xl border border-[#d8cdbb] px-4 py-3 outline-none focus:border-[#244e3b]"
-                    />
-
-                    <button
-                      type="submit"
-                      className="rounded-xl bg-[#244e3b] px-5 py-3 font-semibold text-white"
-                    >
-                      Subscribe
-                    </button>
-                  </form>
-
-                  <p className="mt-3 text-xs leading-5 text-[#6b7280]">
-                    By subscribing, you agree to receive occasional emails from
-                    ModRent.
-                  </p>
-                </div>
+                <SubscribeForm />
               </div>
 
               <div>
@@ -123,35 +113,59 @@ export default function RootLayout({
                 </h3>
 
                 <div className="flex flex-col gap-3 text-sm">
-                  <Link href="/" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Home
                   </Link>
 
-                  <Link href="/listings" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/listings"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Browse Rentals
                   </Link>
 
-                  <Link href="/create" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/create"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     List Your Unit
                   </Link>
 
-                  <Link href="/faq" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/faq"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     FAQ
                   </Link>
 
-                  <Link href="/legal" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/legal"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Legal & Compliance
                   </Link>
 
-                  <Link href="/terms" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/terms"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Terms of Use
                   </Link>
 
-                  <Link href="/privacy" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/privacy"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Privacy Policy
                   </Link>
 
-                  <Link href="/contact" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/contact"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Contact
                   </Link>
                 </div>
