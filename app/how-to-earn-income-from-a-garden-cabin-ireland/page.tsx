@@ -34,21 +34,31 @@ export default function Page() {
 
         <a
           href="/create"
+          aria-label="List your property"
           style={{
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "#ffffff",
-            color: "#0b3325",
             padding: "16px 24px",
             borderRadius: "12px",
-            fontWeight: 700,
-            fontSize: "16px",
-            lineHeight: "24px",
             textDecoration: "none",
+            minWidth: "184px",
+            minHeight: "56px",
           }}
         >
-          List your property
+          <span
+            style={{
+              color: "#0b3325",
+              WebkitTextFillColor: "#0b3325",
+              fontSize: "16px",
+              lineHeight: "24px",
+              fontWeight: 700,
+              display: "inline-block",
+            }}
+          >
+            List your property
+          </span>
         </a>
       </section>
     </main>
