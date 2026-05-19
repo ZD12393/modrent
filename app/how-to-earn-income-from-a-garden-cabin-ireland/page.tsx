@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export const metadata = {
   title: "How to Earn Income from a Garden Cabin in Ireland | ModRent",
   description:
@@ -34,13 +32,24 @@ export default function Page() {
           studio and reach people looking for this type of space.
         </p>
 
-        <Link
+        <a
           href="/create"
-          className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-4 font-semibold no-underline"
-          style={{ color: "#0b3325" }}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#ffffff",
+            color: "#0b3325",
+            padding: "16px 24px",
+            borderRadius: "12px",
+            fontWeight: 700,
+            fontSize: "16px",
+            lineHeight: "24px",
+            textDecoration: "none",
+          }}
         >
           List your property
-        </Link>
+        </a>
       </section>
     </main>
   );
