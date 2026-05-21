@@ -235,14 +235,49 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <a
+              href="/where-to-advertise-a-log-cabin-rental-ireland"
+              className="rounded-[24px] border border-[#d8cdbb] bg-[#fffdf8] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              style={{ color: "#1f2933", textDecoration: "none" }}
+            >
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c9823a]">
+                Owner listing guide
+              </p>
+
+              <h3 className="mb-3 text-xl font-bold text-[#173528]">
+                Where to advertise a log cabin rental in Ireland
+              </h3>
+
+              <p className="leading-7 text-[#5f6b63]">
+                A practical guide for owners looking for the right place to list
+                a log cabin, garden cabin or detached rental space.
+              </p>
+            </a>
+
+            <a
+              href="/are-modular-units-exempt-from-planning-ireland"
+              className="rounded-[24px] border border-[#d8cdbb] bg-[#fffdf8] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              style={{ color: "#1f2933", textDecoration: "none" }}
+            >
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c9823a]">
+                Planning guide
+              </p>
+
+              <h3 className="mb-3 text-xl font-bold text-[#173528]">
+                Are modular units exempt from planning?
+              </h3>
+
+              <p className="leading-7 text-[#5f6b63]">
+                A careful guide to recent proposals and what owners should check
+                before assuming any planning position.
+              </p>
+            </a>
+
             <a
               href="/can-i-rent-out-a-log-cabin-in-ireland"
               className="rounded-[24px] border border-[#d8cdbb] bg-[#fffdf8] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-              style={{
-                color: "#1f2933",
-                textDecoration: "none",
-              }}
+              style={{ color: "#1f2933", textDecoration: "none" }}
             >
               <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c9823a]">
                 Owner guide
@@ -261,10 +296,7 @@ export default function Home() {
             <a
               href="/rent-a-room-relief-modular-units-ireland"
               className="rounded-[24px] border border-[#d8cdbb] bg-[#fffdf8] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-              style={{
-                color: "#1f2933",
-                textDecoration: "none",
-              }}
+              style={{ color: "#1f2933", textDecoration: "none" }}
             >
               <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c9823a]">
                 Tax considerations
@@ -283,10 +315,7 @@ export default function Home() {
             <a
               href="/how-to-earn-income-from-a-garden-cabin-ireland"
               className="rounded-[24px] border border-[#d8cdbb] bg-[#fffdf8] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-              style={{
-                color: "#1f2933",
-                textDecoration: "none",
-              }}
+              style={{ color: "#1f2933", textDecoration: "none" }}
             >
               <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c9823a]">
                 Income planning
