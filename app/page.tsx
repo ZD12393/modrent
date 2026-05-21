@@ -159,8 +159,7 @@ export default function Home() {
               </p>
 
               <h2 className="mb-6 text-3xl font-bold tracking-tight text-[#173528] md:text-4xl">
-                A dedicated marketplace for an emerging Irish rental
-                opportunity.
+                A dedicated marketplace for an emerging Irish rental opportunity.
               </h2>
 
               <div className="space-y-5 text-lg leading-8 text-[#5f6b63]">
@@ -192,8 +191,7 @@ export default function Home() {
                 </li>
                 <li>Connect directly through simple enquiry tools</li>
                 <li>
-                  Access clear reminders around owner compliance
-                  responsibilities
+                  Access clear reminders around owner compliance responsibilities
                 </li>
               </ul>
 
@@ -271,6 +269,25 @@ export default function Home() {
               <p className="leading-7 text-[#5f6b63]">
                 A careful guide to recent proposals and what owners should check
                 before assuming any planning position.
+              </p>
+            </a>
+
+            <a
+              href="/modular-home-rental-ireland"
+              className="rounded-[24px] border border-[#d8cdbb] bg-[#fffdf8] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              style={{ color: "#1f2933", textDecoration: "none" }}
+            >
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#c9823a]">
+                Category guide
+              </p>
+
+              <h3 className="mb-3 text-xl font-bold text-[#173528]">
+                Modular home rental in Ireland
+              </h3>
+
+              <p className="leading-7 text-[#5f6b63]">
+                A dedicated guide for modular homes, detached studios and
+                standalone modular accommodation in the Irish rental market.
               </p>
             </a>
 
