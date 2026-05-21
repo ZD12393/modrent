@@ -34,7 +34,10 @@ export default function RootLayout({
 
         <header className="border-b border-[#d6d3cc] bg-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 md:px-6">
-            <Link href="/" className="text-2xl font-bold tracking-tight text-[#111827]">
+            <Link
+              href="/"
+              className="text-2xl font-bold tracking-tight text-[#111827]"
+            >
               ModRent
             </Link>
 
@@ -65,7 +68,7 @@ export default function RootLayout({
 
         <footer className="mt-20 border-t border-[#d6d3cc] bg-white">
           <div className="mx-auto max-w-7xl px-6 py-12">
-            <div className="grid gap-10 lg:grid-cols-[1.4fr_0.7fr_0.9fr]">
+            <div className="grid gap-10 lg:grid-cols-[1.4fr_0.7fr_1fr]">
               <div className="max-w-xl">
                 <h2 className="mb-4 text-2xl font-bold text-[#111827]">
                   ModRent
@@ -105,24 +108,31 @@ export default function RootLayout({
                   <Link href="/" className="text-[#4b5563] transition hover:text-[#111827]">
                     Home
                   </Link>
+
                   <Link href="/listings" className="text-[#4b5563] transition hover:text-[#111827]">
                     Browse Rentals
                   </Link>
+
                   <Link href="/create" className="text-[#4b5563] transition hover:text-[#111827]">
                     List Your Unit
                   </Link>
+
                   <Link href="/faq" className="text-[#4b5563] transition hover:text-[#111827]">
                     FAQ
                   </Link>
+
                   <Link href="/legal" className="text-[#4b5563] transition hover:text-[#111827]">
                     Legal & Compliance
                   </Link>
+
                   <Link href="/terms" className="text-[#4b5563] transition hover:text-[#111827]">
                     Terms of Use
                   </Link>
+
                   <Link href="/privacy" className="text-[#4b5563] transition hover:text-[#111827]">
                     Privacy Policy
                   </Link>
+
                   <Link href="/contact" className="text-[#4b5563] transition hover:text-[#111827]">
                     Contact
                   </Link>
@@ -135,16 +145,45 @@ export default function RootLayout({
                 </h3>
 
                 <div className="flex flex-col gap-3 text-sm leading-6">
-                  <Link href="/can-i-rent-out-a-log-cabin-in-ireland" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/where-to-advertise-a-log-cabin-rental-ireland"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
+                    Where to advertise a log cabin rental
+                  </Link>
+
+                  <Link
+                    href="/are-modular-units-exempt-from-planning-ireland"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
+                    Are modular units exempt from planning?
+                  </Link>
+
+                  <Link
+                    href="/can-i-rent-out-a-log-cabin-in-ireland"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Can I rent out a log cabin in Ireland?
                   </Link>
-                  <Link href="/rent-a-room-relief-modular-units-ireland" className="text-[#4b5563] transition hover:text-[#111827]">
+
+                  <Link
+                    href="/rent-a-room-relief-modular-units-ireland"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Rent-a-Room Relief and modular units
                   </Link>
-                  <Link href="/how-to-earn-income-from-a-garden-cabin-ireland" className="text-[#4b5563] transition hover:text-[#111827]">
+
+                  <Link
+                    href="/how-to-earn-income-from-a-garden-cabin-ireland"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     How to earn income from a garden cabin
                   </Link>
-                  <Link href="/create" className="mt-2 inline-block font-semibold text-[#244e3b] underline underline-offset-4">
+
+                  <Link
+                    href="/create"
+                    className="mt-2 inline-block font-semibold text-[#244e3b] underline underline-offset-4"
+                  >
                     List your property
                   </Link>
                 </div>
