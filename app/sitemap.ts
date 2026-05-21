@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/how-to-earn-income-from-a-garden-cabin-ireland",
     "/are-modular-units-exempt-from-planning-ireland",
     "/where-to-advertise-a-log-cabin-rental-ireland",
+    "/modular-home-rental-ireland",
   ];
 
   return routes.map((route) => ({
