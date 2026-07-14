@@ -121,16 +121,22 @@ export default function CreatePage() {
     setBannerIndex(0);
   };
 
-  const verifyTurnstile = async () => {
-    const response = await fetch("/api/verify-turnstile", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ turnstileToken }),
-    });
-
-    return response.ok;
+  const resetForm = () => {
+    setUnitType("");
+    setTown("");
+    setCounty("");
+    setRent("");
+    setAvailableFrom("");
+    setBedrooms("");
+    setBathrooms("");
+    setBillsIncluded(false);
+    setPetFriendly(false);
+    setPhotos([]);
+    setBannerIndex(0);
+    setDescription("");
+    setEmail("");
+    setTurnstileToken("");
+    setHasTrackedStart(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -152,14 +158,6 @@ export default function CreatePage() {
     }
 
     setSaving(true);
-
-    const securityCheckPassed = await verifyTurnstile();
-
-    if (!securityCheckPassed) {
-      alert("Security check failed. Please refresh the page and try again.");
-      setSaving(false);
-      return;
-    }
 
     try {
       const uploadedPhotoUrls: string[] = [];
@@ -191,8 +189,12 @@ export default function CreatePage() {
       const bannerImageUrl =
         uploadedPhotoUrls[bannerIndex] || uploadedPhotoUrls[0] || "";
 
-      const { error } = await supabase.from("listings").insert([
-        {
+      const response = await fetch("/api/submit-listing", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           title: generatedTitle,
           unit_type: unitType,
           town,
@@ -208,39 +210,34 @@ export default function CreatePage() {
           banner_image_url: bannerImageUrl,
           description,
           email,
-          status: "pending",
-        },
-      ]);
+          turnstileToken,
+        }),
+      });
 
-      if (error) {
-        alert(`There was a problem saving the listing: ${error.message}`);
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.error || "There was a problem submitting the listing.");
         setSaving(false);
         return;
       }
 
       trackEvent("listing_submitted");
 
-      alert(
-        "Listing submitted for review. It will appear publicly once approved by ModRent."
-      );
+      if (result.emailSent) {
+        alert(
+          "Listing submitted successfully. A confirmation email has been sent to you."
+        );
+      } else {
+        alert(
+          "Listing submitted successfully. It will appear publicly once approved by ModRent."
+        );
+      }
 
-      setUnitType("");
-      setTown("");
-      setCounty("");
-      setRent("");
-      setAvailableFrom("");
-      setBedrooms("");
-      setBathrooms("");
-      setBillsIncluded(false);
-      setPetFriendly(false);
-      setPhotos([]);
-      setBannerIndex(0);
-      setDescription("");
-      setEmail("");
-      setTurnstileToken("");
-      setHasTrackedStart(false);
-    } catch {
-      alert("Something went wrong while saving the listing.");
+      resetForm();
+    } catch (error) {
+      console.error("Listing submission failed:", error);
+      alert("Something went wrong while submitting the listing.");
     }
 
     setSaving(false);
