@@ -22,6 +22,8 @@ type Listing = {
   pet_friendly: boolean | null;
 };
 
+const siteUrl = "https://www.modrent.ie";
+
 async function getListing(id: string): Promise<Listing | null> {
   const listingId = Number(id);
 
@@ -39,11 +41,62 @@ async function getListing(id: string): Promise<Listing | null> {
     return null;
   }
 
-  if (data.status === "hidden") {
+  /*
+   * Only active listings should be publicly accessible.
+   * Older listings with a null status are also treated as active.
+   */
+  if (data.status !== "active" && data.status !== null) {
     return null;
   }
 
   return data as Listing;
+}
+
+function getLocation(listing: Listing) {
+  return listing.town
+    ? `${listing.town}, Co. ${listing.county}`
+    : `Co. ${listing.county}`;
+}
+
+function getListingType(listing: Listing) {
+  return listing.unit_type || "modular home";
+}
+
+function getSeoTitle(listing: Listing) {
+  const location = getLocation(listing);
+  const unitType = getListingType(listing);
+
+  return `${unitType} to Rent in ${location} | ModRent`;
+}
+
+function getSeoDescription(listing: Listing) {
+  const location = getLocation(listing);
+  const unitType = getListingType(listing);
+  const rent = listing.rent
+    ? `Available for €${listing.rent} per month.`
+    : "";
+
+  const fallback = `${unitType} to rent in ${location}. ${rent} View photos, rental details and enquire through ModRent.`;
+
+  if (!listing.description) {
+    return fallback.slice(0, 160);
+  }
+
+  const cleanedDescription = listing.description
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return `${cleanedDescription.slice(0, 120)} ${rent}`.trim().slice(0, 160);
+}
+
+function getImages(listing: Listing) {
+  const images = [
+    listing.banner_image_url,
+    listing.image_url,
+    ...(listing.photos || []),
+  ].filter((image): image is string => Boolean(image));
+
+  return [...new Set(images)];
 }
 
 export async function generateMetadata({
@@ -58,34 +111,35 @@ export async function generateMetadata({
     return {
       title: "Listing Not Found | ModRent",
       description: "This ModRent listing could not be found.",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
-  const location = listing.town
-    ? `${listing.town}, Co. ${listing.county}`
-    : listing.county;
-
-  const title = `${listing.title} | ModRent`;
-
-  const description =
-    listing.description?.slice(0, 150) ||
-    `Browse this ${
-      listing.unit_type || "modular rental"
-    } in ${location} on ModRent.`;
+  const title = getSeoTitle(listing);
+  const description = getSeoDescription(listing);
+  const listingUrl = `${siteUrl}/listings/${listing.id}`;
 
   const image =
     listing.banner_image_url ||
     listing.image_url ||
     listing.photos?.[0] ||
-    "/modular-unit.jpg";
+    `${siteUrl}/modular-unit.jpg`;
 
   return {
     title,
     description,
+
+    alternates: {
+      canonical: listingUrl,
+    },
+
     openGraph: {
       title,
       description,
-      url: `https://modrent.ie/listings/${listing.id}`,
+      url: listingUrl,
       siteName: "ModRent",
       images: [
         {
@@ -98,6 +152,7 @@ export async function generateMetadata({
       locale: "en_IE",
       type: "website",
     },
+
     twitter: {
       card: "summary_large_image",
       title,
@@ -137,5 +192,150 @@ export default async function ListingPage({
     );
   }
 
-  return <ListingDetailClient listing={listing} />;
+  const listingUrl = `${siteUrl}/listings/${listing.id}`;
+  const location = getLocation(listing);
+  const images = getImages(listing);
+  const numericRent = Number(
+    String(listing.rent).replace(/[^0-9.]/g, "")
+  );
+
+  const accommodationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Residence",
+    "@id": `${listingUrl}#residence`,
+    url: listingUrl,
+    name: listing.title,
+    description:
+      listing.description ||
+      `${getListingType(listing)} available to rent in ${location}.`,
+    image: images.length > 0 ? images : [`${siteUrl}/modular-unit.jpg`],
+
+    address: {
+      "@type": "PostalAddress",
+      ...(listing.town
+        ? {
+            addressLocality: listing.town,
+          }
+        : {}),
+      addressRegion: listing.county,
+      addressCountry: "IE",
+    },
+
+    ...(listing.bedrooms !== null
+      ? {
+          numberOfBedrooms: listing.bedrooms,
+        }
+      : {}),
+
+    ...(listing.bathrooms !== null
+      ? {
+          numberOfBathroomsTotal: listing.bathrooms,
+        }
+      : {}),
+
+    ...(listing.pet_friendly !== null
+      ? {
+          petsAllowed: listing.pet_friendly,
+        }
+      : {}),
+
+    offers: {
+      "@type": "Offer",
+      url: listingUrl,
+      priceCurrency: "EUR",
+      ...(Number.isFinite(numericRent) && numericRent > 0
+        ? {
+            price: numericRent,
+          }
+        : {}),
+      availability: "https://schema.org/InStock",
+      category: "Monthly rental",
+
+      priceSpecification: {
+        "@type": "UnitPriceSpecification",
+        priceCurrency: "EUR",
+        ...(Number.isFinite(numericRent) && numericRent > 0
+          ? {
+              price: numericRent,
+            }
+          : {}),
+        unitText: "MONTH",
+      },
+
+      ...(listing.available_from
+        ? {
+            validFrom: listing.available_from,
+          }
+        : {}),
+    },
+
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Accommodation type",
+        value: getListingType(listing),
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Bills included",
+        value: listing.bills_included ? "Yes" : "No",
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Pet friendly",
+        value: listing.pet_friendly ? "Yes" : "No",
+      },
+    ],
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Modular homes to rent",
+        item: `${siteUrl}/listings`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: listing.title,
+        item: listingUrl,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(accommodationSchema).replace(
+            /</g,
+            "\\u003c"
+          ),
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema).replace(
+            /</g,
+            "\\u003c"
+          ),
+        }}
+      />
+
+      <ListingDetailClient listing={listing} />
+    </>
+  );
 }
