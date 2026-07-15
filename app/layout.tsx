@@ -5,9 +5,31 @@ import "./globals.css";
 import SubscribeForm from "@/components/SubscribeForm";
 
 export const metadata: Metadata = {
-  title: "ModRent",
+  title: {
+    default: "ModRent | Modular Homes and Garden Cabins to Rent in Ireland",
+    template: "%s | ModRent",
+  },
   description:
-    "Irish rental marketplace for modular homes, garden units and backyard studios.",
+    "Ireland's dedicated marketplace for modular homes, garden cabins, detached studios and standalone rental accommodation.",
+  metadataBase: new URL("https://www.modrent.ie"),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "ModRent | Modular Homes and Garden Cabins to Rent in Ireland",
+    description:
+      "Browse modular homes, garden cabins and standalone rental accommodation across Ireland, or list your own unit on ModRent.",
+    url: "https://www.modrent.ie",
+    siteName: "ModRent",
+    locale: "en_IE",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ModRent | Modular Homes and Garden Cabins to Rent in Ireland",
+    description:
+      "Ireland's dedicated marketplace for modular homes, garden cabins and standalone rental accommodation.",
+  },
 };
 
 export default function RootLayout({
@@ -42,22 +64,52 @@ export default function RootLayout({
             </Link>
 
             <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-              <Link href="/" className="text-[#111827] transition hover:text-[#4b5563]">
+              <Link
+                href="/"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 Home
               </Link>
-              <Link href="/listings" className="text-[#111827] transition hover:text-[#4b5563]">
+
+              <Link
+                href="/listings"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 Browse Rentals
               </Link>
-              <Link href="/create" className="text-[#111827] transition hover:text-[#4b5563]">
+
+              <Link
+                href="/create"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 List Your Unit
               </Link>
-              <Link href="/faq" className="text-[#111827] transition hover:text-[#4b5563]">
+
+              <Link
+                href="/modular-homes-legislation-ireland"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
+                Legislation
+              </Link>
+
+              <Link
+                href="/faq"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 FAQ
               </Link>
-              <Link href="/legal" className="text-[#111827] transition hover:text-[#4b5563]">
+
+              <Link
+                href="/legal"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 Legal
               </Link>
-              <Link href="/contact" className="text-[#111827] transition hover:text-[#4b5563]">
+
+              <Link
+                href="/contact"
+                className="text-[#111827] transition hover:text-[#4b5563]"
+              >
                 Contact
               </Link>
             </nav>
@@ -75,9 +127,15 @@ export default function RootLayout({
                 </h2>
 
                 <p className="mb-4 text-base leading-7 text-[#4b5563]">
-                  ModRent is a specialist Irish rental marketplace focused on
-                  modular homes, garden cabins, detached studios and standalone
-                  rental spaces.
+                  ModRent is Ireland&apos;s dedicated marketplace for modular
+                  homes, garden cabins, detached studios and standalone rental
+                  accommodation.
+                </p>
+
+                <p className="mb-4 text-base leading-7 text-[#4b5563]">
+                  Whether you are looking to rent a modular home or advertise a
+                  self-contained garden unit, ModRent connects owners with
+                  prospective tenants across Ireland.
                 </p>
 
                 <div className="space-y-4 text-sm leading-6 text-[#6b7280]">
@@ -89,10 +147,15 @@ export default function RootLayout({
                   </p>
 
                   <p>
-                    Need to edit or remove your listing? Please contact
-                    hello@modrent.ie using the same email address used when
-                    submitting the listing and include the listing title or
-                    location details.
+                    Need to edit or remove your listing? Please contact{" "}
+                    <a
+                      href="mailto:hello@modrent.ie"
+                      className="underline underline-offset-4"
+                    >
+                      hello@modrent.ie
+                    </a>{" "}
+                    using the same email address used when submitting the
+                    listing, and include the listing title or location details.
                   </p>
                 </div>
 
@@ -105,35 +168,66 @@ export default function RootLayout({
                 </h3>
 
                 <div className="flex flex-col gap-3 text-sm">
-                  <Link href="/" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Home
                   </Link>
 
-                  <Link href="/listings" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/listings"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Browse Rentals
                   </Link>
 
-                  <Link href="/create" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/create"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     List Your Unit
                   </Link>
 
-                  <Link href="/faq" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/modular-homes-legislation-ireland"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
+                    Latest Legislation
+                  </Link>
+
+                  <Link
+                    href="/faq"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     FAQ
                   </Link>
 
-                  <Link href="/legal" className="text-[#4b5563] transition hover:text-[#111827]">
-                    Legal & Compliance
+                  <Link
+                    href="/legal"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
+                    Legal &amp; Compliance
                   </Link>
 
-                  <Link href="/terms" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/terms"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Terms of Use
                   </Link>
 
-                  <Link href="/privacy" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/privacy"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Privacy Policy
                   </Link>
 
-                  <Link href="/contact" className="text-[#4b5563] transition hover:text-[#111827]">
+                  <Link
+                    href="/contact"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
                     Contact
                   </Link>
                 </div>
@@ -141,50 +235,71 @@ export default function RootLayout({
 
               <div>
                 <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-[#111827]">
-                  Owner resources
+                  Modular Rental Guides
                 </h3>
 
                 <div className="flex flex-col gap-3 text-sm leading-6">
                   <Link
-                    href="/where-to-advertise-a-log-cabin-rental-ireland"
-                    className="text-[#4b5563] transition hover:text-[#111827]"
+                    href="/modular-homes-legislation-ireland"
+                    className="font-medium text-[#244e3b] transition hover:text-[#111827]"
                   >
-                    Where to advertise a log cabin rental
+                    Latest Modular Homes Legislation
                   </Link>
 
                   <Link
                     href="/are-modular-units-exempt-from-planning-ireland"
                     className="text-[#4b5563] transition hover:text-[#111827]"
                   >
-                    Are modular units exempt from planning?
+                    Are Modular Units Exempt from Planning?
                   </Link>
 
                   <Link
                     href="/can-i-rent-out-a-log-cabin-in-ireland"
                     className="text-[#4b5563] transition hover:text-[#111827]"
                   >
-                    Can I rent out a log cabin in Ireland?
+                    Can I Rent Out a Log Cabin?
                   </Link>
 
                   <Link
                     href="/rent-a-room-relief-modular-units-ireland"
                     className="text-[#4b5563] transition hover:text-[#111827]"
                   >
-                    Rent-a-Room Relief and modular units
+                    Rent-a-Room Relief for Modular Units
                   </Link>
 
                   <Link
                     href="/how-to-earn-income-from-a-garden-cabin-ireland"
                     className="text-[#4b5563] transition hover:text-[#111827]"
                   >
-                    How to earn income from a garden cabin
+                    Garden Cabin Rental Income Guide
+                  </Link>
+
+                  <Link
+                    href="/where-to-advertise-a-log-cabin-rental-ireland"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
+                    Where to Advertise a Log Cabin Rental
+                  </Link>
+
+                  <Link
+                    href="/modular-home-rental-ireland"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
+                    Modular Home Rental in Ireland
+                  </Link>
+
+                  <Link
+                    href="/garden-cabins-to-rent-ireland"
+                    className="text-[#4b5563] transition hover:text-[#111827]"
+                  >
+                    Garden Cabins to Rent in Ireland
                   </Link>
 
                   <Link
                     href="/create"
                     className="mt-2 inline-block font-semibold text-[#244e3b] underline underline-offset-4"
                   >
-                    List your property
+                    Submit Your Listing
                   </Link>
                 </div>
               </div>
