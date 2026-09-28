@@ -244,68 +244,82 @@ export default function CreatePage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f6f4ef] text-[#1f1f1f]">
-      <section className="mx-auto max-w-6xl px-6 py-16 md:py-20">
+    <main className="min-h-screen bg-[#f7f3ea] text-[#1f2933]">
+      <section className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-20">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <div>
-            <div className="mb-5 inline-block rounded-full border border-[#d7d2c8] bg-white px-4 py-2 text-sm font-semibold text-[#244e3b]">
-              Owner submissions now open
+
+          {/* LEFT SIDE */}
+          <div className="lg:sticky lg:top-10">
+            <div className="mb-5 inline-block rounded-full border border-[#d8cdbb] bg-[#fffdf8] px-4 py-2 text-sm font-semibold text-[#244e3b]">
+              Free property listings
             </div>
 
             <h1 className="mb-5 text-4xl font-bold leading-tight tracking-tight text-[#173528] md:text-5xl">
-              List your modular unit, garden cabin or detached rental space.
+              Your unused space could be someone&apos;s next home.
             </h1>
 
-            <p className="mb-6 text-lg leading-8 text-[#555]">
-              Submit your space to ModRent for review. Standard listings and
-              direct enquiries are currently free while the marketplace is being
-              built.
+            <p className="mb-8 max-w-xl text-lg leading-8 text-[#5f6b63]">
+              Have a garden cabin, modular home or self-contained space
+              available? List it free on ModRent and reach people looking
+              specifically for this type of accommodation.
             </p>
 
-            <div className="mb-8 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl border border-[#e3ddd2] bg-white p-5">
-                <h2 className="mb-2 text-base font-bold text-[#173528]">
-                  Built for this category
-                </h2>
-                <p className="text-sm leading-6 text-[#5f6b63]">
-                  ModRent is focused on modular homes, garden cabins, detached
-                  studios and standalone small rental spaces.
-                </p>
+            <div className="mb-8 space-y-3">
+              <div className="flex gap-4 rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-5">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e6efe8] font-bold text-[#244e3b]">
+                  1
+                </div>
+
+                <div>
+                  <h2 className="mb-1 font-bold text-[#173528]">
+                    100% free to list
+                  </h2>
+                  <p className="text-sm leading-6 text-[#5f6b63]">
+                    Create your standard listing and receive enquiries with no
+                    upfront listing fee.
+                  </p>
+                </div>
               </div>
 
-              <div className="rounded-2xl border border-[#e3ddd2] bg-white p-5">
-                <h2 className="mb-2 text-base font-bold text-[#173528]">
-                  Direct enquiries
-                </h2>
-                <p className="text-sm leading-6 text-[#5f6b63]">
-                  Interested renters contact owners directly through the listing
-                  enquiry flow.
-                </p>
+              <div className="flex gap-4 rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-5">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e6efe8] font-bold text-[#244e3b]">
+                  2
+                </div>
+
+                <div>
+                  <h2 className="mb-1 font-bold text-[#173528]">
+                    Renters are already looking
+                  </h2>
+                  <p className="text-sm leading-6 text-[#5f6b63]">
+                    Reach people looking for modular homes, cabins and
+                    alternative rental accommodation in Ireland.
+                  </p>
+                </div>
               </div>
 
-              <div className="rounded-2xl border border-[#e3ddd2] bg-white p-5">
-                <h2 className="mb-2 text-base font-bold text-[#173528]">
-                  Reviewed before publication
-                </h2>
-                <p className="text-sm leading-6 text-[#5f6b63]">
-                  Listings are submitted for review before appearing publicly on
-                  ModRent.
-                </p>
-              </div>
+              <div className="flex gap-4 rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-5">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e6efe8] font-bold text-[#244e3b]">
+                  3
+                </div>
 
-              <div className="rounded-2xl border border-[#e3ddd2] bg-white p-5">
-                <h2 className="mb-2 text-base font-bold text-[#173528]">
-                  No upfront listing fee
-                </h2>
-                <p className="text-sm leading-6 text-[#5f6b63]">
-                  Standard owner listings are currently free during the early
-                  launch stage.
-                </p>
+                <div>
+                  <h2 className="mb-1 font-bold text-[#173528]">
+                    Receive direct enquiries
+                  </h2>
+                  <p className="text-sm leading-6 text-[#5f6b63]">
+                    Interested renters can contact you directly through your
+                    ModRent listing.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="rounded-[28px] bg-[#244e3b] p-6 text-white">
-              <h2 className="mb-4 text-xl font-bold">
+            <div className="rounded-[28px] bg-[#244e3b] p-6 text-white md:p-7">
+              <p className="mb-2 text-sm font-bold uppercase tracking-[0.16em] text-[#e9c58d]">
+                What can I list?
+              </p>
+
+              <h2 className="mb-5 text-xl font-bold">
                 Suitable spaces may include:
               </h2>
 
@@ -316,67 +330,59 @@ export default function CreatePage() {
                 <li>Compact standalone units with appropriate facilities</li>
               </ul>
             </div>
-
-            <div className="mt-6 rounded-[24px] border border-[#d8cdbb] bg-[#fffdf8] p-5">
-              <h2 className="mb-3 text-lg font-bold text-[#173528]">
-                Owner responsibility
-              </h2>
-
-              <p className="text-sm leading-6 text-[#5f6b63]">
-                ModRent is a listing marketplace only. Owners are responsible
-                for checking planning, tax, insurance, safety, building
-                regulation and legal requirements before renting out any space.
-              </p>
-            </div>
           </div>
 
+          {/* FORM */}
           <div>
             <form
               onSubmit={handleSubmit}
               onChange={trackListingStarted}
-              className="space-y-6 rounded-[28px] border border-[#e3ddd2] bg-white p-6 shadow-sm md:p-8"
+              className="space-y-6 rounded-[28px] border border-[#d8cdbb] bg-[#fffdf8] p-6 shadow-[0_18px_50px_rgba(31,41,51,0.08)] md:p-8"
             >
               <div>
-                <div className="mb-5 inline-block rounded-full border border-[#d7d2c8] bg-[#fbfaf7] px-3 py-1 text-sm font-medium">
-                  Listing details
+                <div className="mb-5 inline-block rounded-full border border-[#d8cdbb] bg-white px-3 py-1 text-sm font-medium text-[#244e3b]">
+                  Property details
                 </div>
 
                 <h2 className="mb-3 text-3xl font-bold text-[#173528]">
-                  Submit your space for review
+                  Create your free listing
                 </h2>
 
-                <p className="text-base leading-7 text-[#555]">
-                  The form usually takes a few minutes. Upload clear photos and
-                  describe the space honestly so renters know what to expect.
+                <p className="text-base leading-7 text-[#5f6b63]">
+                  Add a few details and photos below. It only takes a few
+                  minutes. We&apos;ll quickly check your listing before it goes
+                  live.
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
-                <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-[#777]">
-                  Listing title
+              {/* AUTO TITLE */}
+              <div className="rounded-2xl border border-[#d8cdbb] bg-white p-5">
+                <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-[#c9823a]">
+                  Your listing title
                 </p>
 
-                <p className="text-lg font-semibold text-[#1f1f1f]">
+                <p className="text-lg font-semibold text-[#173528]">
                   {generatedTitle ||
-                    "Generated automatically from the details below"}
+                    "We'll create this automatically for you"}
                 </p>
 
-                <p className="mt-2 text-sm leading-6 text-[#666]">
-                  To keep ModRent consistent and professional, listing titles
-                  are created automatically using the unit type, town and county.
+                <p className="mt-2 text-sm leading-6 text-[#5f6b63]">
+                  Your title will be created automatically from the unit type,
+                  town and county you enter below.
                 </p>
               </div>
 
+              {/* UNIT TYPE */}
               <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Unit type
+                <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                  What type of property is it?
                 </label>
 
                 <select
                   value={unitType}
                   onChange={(e) => setUnitType(e.target.value)}
                   required
-                  className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3 text-[#1f1f1f] outline-none focus:border-black"
+                  className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 text-[#1f2933] outline-none focus:border-[#244e3b]"
                 >
                   <option value="">Select unit type</option>
                   {unitTypes.map((type) => (
@@ -387,59 +393,64 @@ export default function CreatePage() {
                 </select>
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Town or area
-                </label>
+              {/* LOCATION */}
+              <div className="grid gap-5 md:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                    Town or area
+                  </label>
 
-                <input
-                  type="text"
-                  placeholder="e.g. Ashford"
-                  value={town}
-                  onChange={(e) => setTown(e.target.value)}
-                  required
-                  className="w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
-                />
+                  <input
+                    type="text"
+                    placeholder="e.g. Ashford"
+                    value={town}
+                    onChange={(e) => setTown(e.target.value)}
+                    required
+                    className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                    County
+                  </label>
+
+                  <select
+                    value={county}
+                    onChange={(e) => setCounty(e.target.value)}
+                    required
+                    className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 text-[#1f2933] outline-none focus:border-[#244e3b]"
+                  >
+                    <option value="">Select county</option>
+                    {counties.map((countyName) => (
+                      <option key={countyName} value={countyName}>
+                        {countyName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium">
-                  County
-                </label>
-
-                <select
-                  value={county}
-                  onChange={(e) => setCounty(e.target.value)}
-                  required
-                  className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3 text-[#1f1f1f] outline-none focus:border-black"
-                >
-                  <option value="">Select county</option>
-                  {counties.map((countyName) => (
-                    <option key={countyName} value={countyName}>
-                      {countyName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
+              {/* RENT / BEDROOMS / BATHROOMS */}
               <div className="grid gap-5 md:grid-cols-3">
                 <div>
-                  <label className="mb-2 block text-sm font-medium">
+                  <label className="mb-2 block text-sm font-semibold text-[#173528]">
                     Monthly rent (€)
                   </label>
 
                   <input
                     type="text"
+                    inputMode="numeric"
                     placeholder="e.g. 1200"
                     value={rent}
                     onChange={(e) => setRent(e.target.value)}
                     required
-                    className="w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
+                    className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium">
+                  <label className="mb-2 block text-sm font-semibold text-[#173528]">
                     Bedrooms
                   </label>
 
@@ -449,12 +460,12 @@ export default function CreatePage() {
                     placeholder="1"
                     value={bedrooms}
                     onChange={(e) => setBedrooms(e.target.value)}
-                    className="w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
+                    className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-medium">
+                  <label className="mb-2 block text-sm font-semibold text-[#173528]">
                     Bathrooms
                   </label>
 
@@ -464,13 +475,14 @@ export default function CreatePage() {
                     placeholder="1"
                     value={bathrooms}
                     onChange={(e) => setBathrooms(e.target.value)}
-                    className="w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
+                    className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
                   />
                 </div>
               </div>
 
+              {/* AVAILABLE */}
               <div>
-                <label className="mb-2 block text-sm font-medium">
+                <label className="mb-2 block text-sm font-semibold text-[#173528]">
                   Available from
                 </label>
 
@@ -479,62 +491,90 @@ export default function CreatePage() {
                   value={availableFrom}
                   onChange={(e) => setAvailableFrom(e.target.value)}
                   required
-                  className="w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
+                  className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
                 />
               </div>
 
+              {/* OPTIONS */}
               <div className="grid gap-4 md:grid-cols-2">
-                <label className="flex items-center gap-3 rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-4">
+                <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-[#d8cdbb] bg-white p-4 transition hover:border-[#244e3b]">
                   <input
                     type="checkbox"
                     checked={billsIncluded}
                     onChange={(e) => setBillsIncluded(e.target.checked)}
+                    className="h-4 w-4"
                   />
-                  <span className="font-medium">Bills included</span>
+                  <span className="font-medium text-[#173528]">
+                    Bills included
+                  </span>
                 </label>
 
-                <label className="flex items-center gap-3 rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-4">
+                <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-[#d8cdbb] bg-white p-4 transition hover:border-[#244e3b]">
                   <input
                     type="checkbox"
                     checked={petFriendly}
                     onChange={(e) => setPetFriendly(e.target.checked)}
+                    className="h-4 w-4"
                   />
-                  <span className="font-medium">Pet friendly</span>
+                  <span className="font-medium text-[#173528]">
+                    Pet friendly
+                  </span>
                 </label>
               </div>
 
+              {/* PHOTOS */}
               <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Upload photos
+                <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                  Add your photos
                 </label>
 
-                <input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={(e) => handlePhotoChange(e.target.files)}
-                  className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3"
-                />
+                <label className="block cursor-pointer rounded-[22px] border-2 border-dashed border-[#d8cdbb] bg-white px-6 py-8 text-center transition hover:border-[#244e3b]">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={(e) => handlePhotoChange(e.target.files)}
+                    className="sr-only"
+                  />
 
-                <p className="mt-2 text-sm leading-6 text-[#666]">
-                  Upload up to {MAX_PHOTOS} clear photos. Each photo must be
-                  under {MAX_FILE_SIZE_MB}MB.
-                </p>
+                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#e6efe8] text-2xl text-[#244e3b]">
+                    +
+                  </div>
+
+                  <p className="font-bold text-[#173528]">
+                    {photos.length > 0
+                      ? `${photos.length} photo${
+                          photos.length === 1 ? "" : "s"
+                        } selected`
+                      : "Choose photos from your device"}
+                  </p>
+
+                  <p className="mt-2 text-sm leading-6 text-[#5f6b63]">
+                    Upload up to {MAX_PHOTOS} clear photos. Maximum{" "}
+                    {MAX_FILE_SIZE_MB}MB per photo.
+                  </p>
+                </label>
               </div>
 
+              {/* BANNER IMAGE */}
               {photos.length > 0 && (
-                <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
-                  <h2 className="mb-4 text-lg font-semibold">
-                    Choose banner image
+                <div className="rounded-2xl border border-[#d8cdbb] bg-white p-5">
+                  <h2 className="mb-2 text-lg font-bold text-[#173528]">
+                    Choose your main photo
                   </h2>
+
+                  <p className="mb-4 text-sm leading-6 text-[#5f6b63]">
+                    This is the first image renters will see when they find your
+                    property.
+                  </p>
 
                   <div className="grid gap-4 sm:grid-cols-2">
                     {photos.map((photo, index) => (
                       <label
                         key={`${photo.name}-${index}`}
-                        className={`cursor-pointer overflow-hidden rounded-2xl border bg-white ${
+                        className={`cursor-pointer overflow-hidden rounded-2xl border-2 bg-white transition ${
                           bannerIndex === index
-                            ? "border-black"
+                            ? "border-[#244e3b]"
                             : "border-[#e3ddd2]"
                         }`}
                       >
@@ -552,8 +592,10 @@ export default function CreatePage() {
                             onChange={() => setBannerIndex(index)}
                           />
 
-                          <span className="text-sm font-medium">
-                            Use as banner image
+                          <span className="text-sm font-medium text-[#173528]">
+                            {bannerIndex === index
+                              ? "Main photo"
+                              : "Use as main photo"}
                           </span>
                         </div>
                       </label>
@@ -562,9 +604,30 @@ export default function CreatePage() {
                 </div>
               )}
 
+              {/* DESCRIPTION */}
               <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Contact email
+                <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                  Tell renters about your property
+                </label>
+
+                <textarea
+                  placeholder="For example: Tell renters about the space, location, access, parking, utilities and anything else that makes it a good place to live."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                  className="h-40 w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
+                />
+
+                <p className="mt-2 text-sm text-[#6b746e]">
+                  You don&apos;t need to write an advert — just describe the
+                  property clearly and honestly.
+                </p>
+              </div>
+
+              {/* EMAIL */}
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                  Your contact email
                 </label>
 
                 <input
@@ -573,59 +636,59 @@ export default function CreatePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
+                  className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
                 />
-              </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium">
-                  Description
-                </label>
-
-                <textarea
-                  placeholder="Describe the rental unit, access, location, parking, utilities and anything else renters should know."
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  required
-                  className="h-40 w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
-                />
-              </div>
-
-              <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
-                <h2 className="mb-2 text-base font-bold text-[#173528]">
-                  Before submitting
-                </h2>
-
-                <p className="text-sm leading-6 text-[#5f6b63]">
-                  By submitting a listing, you confirm that the information
-                  provided is accurate and that you understand ModRent does not
-                  verify planning, tax, building regulation, insurance or legal
-                  compliance.
+                <p className="mt-2 text-sm text-[#6b746e]">
+                  We&apos;ll use this for your listing and submission
+                  confirmation.
                 </p>
               </div>
 
+              {/* OWNER RESPONSIBILITY */}
+              <div className="border-t border-[#d8cdbb] pt-6">
+                <p className="text-sm leading-6 text-[#6b746e]">
+                  <strong className="text-[#173528]">
+                    Owner responsibility:
+                  </strong>{" "}
+                  Owners are responsible for ensuring their property meets
+                  applicable planning, tax, insurance, safety, building
+                  regulation and legal requirements. ModRent is a listing
+                  marketplace and does not verify compliance.
+                </p>
+              </div>
+
+              {/* TURNSTILE */}
               <Turnstile
                 sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
                 onVerify={(token) => setTurnstileToken(token)}
                 onExpire={() => setTurnstileToken("")}
               />
 
+              {/* SUBMIT */}
               <button
                 type="submit"
                 disabled={saving}
                 style={{
                   backgroundColor: "#244e3b",
                   color: "#ffffff",
-                  padding: "16px 28px",
+                  padding: "17px 28px",
                   borderRadius: "14px",
                   display: "inline-block",
                   fontWeight: 700,
+                  fontSize: "16px",
                   opacity: saving ? 0.6 : 1,
                   width: "100%",
+                  cursor: saving ? "not-allowed" : "pointer",
                 }}
               >
-                {saving ? "Saving..." : "Submit for Review"}
+                {saving ? "Creating your listing..." : "Create My Free Listing"}
               </button>
+
+              <p className="text-center text-xs leading-5 text-[#6b746e]">
+                Your listing will be checked by ModRent before appearing
+                publicly.
+              </p>
             </form>
           </div>
         </div>
