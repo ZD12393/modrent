@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import Turnstile from "react-turnstile";
 import { supabase } from "@/lib/supabase";
@@ -29,7 +30,10 @@ export default function ListingDetailClient({
   listing: Listing;
 }) {
   const [selectedImage, setSelectedImage] = useState(
-    listing.banner_image_url || listing.image_url || listing.photos?.[0] || ""
+    listing.banner_image_url ||
+      listing.image_url ||
+      listing.photos?.[0] ||
+      ""
   );
 
   const [showForm, setShowForm] = useState(false);
@@ -51,12 +55,15 @@ export default function ListingDetailClient({
   const formattedAvailableFrom = useMemo(() => {
     if (!listing.available_from) return "Not specified";
 
-    return new Date(listing.available_from).toLocaleDateString("en-IE", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  }, [listing]);
+    return new Date(listing.available_from).toLocaleDateString(
+      "en-IE",
+      {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }
+    );
+  }, [listing.available_from]);
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,54 +74,64 @@ export default function ListingDetailClient({
     }
 
     if (!turnstileToken) {
-      alert("Please complete the security check before sending your message.");
+      alert(
+        "Please complete the security check before sending your message."
+      );
       return;
     }
 
     setSending(true);
 
-    const { error: saveError } = await supabase.from("messages").insert([
-      {
-        listing_id: listing.id,
-        sender_email: senderEmail,
-        message,
-      },
-    ]);
+    try {
+      const { error: saveError } = await supabase
+        .from("messages")
+        .insert([
+          {
+            listing_id: listing.id,
+            sender_email: senderEmail,
+            message,
+          },
+        ]);
 
-    if (saveError) {
-      alert(`There was a problem saving the message: ${saveError.message}`);
+      if (saveError) {
+        alert(
+          `There was a problem saving the message: ${saveError.message}`
+        );
+        return;
+      }
+
+      const emailResponse = await fetch("/api/send-enquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ownerEmail: listing.email,
+          listingTitle: listing.title,
+          renterEmail: senderEmail,
+          renterMessage: message,
+          turnstileToken,
+        }),
+      });
+
+      if (!emailResponse.ok) {
+        alert(
+          "Your message was saved, but there was a problem sending the email notification."
+        );
+        return;
+      }
+
+      alert("Message sent.");
+      setSenderEmail("");
+      setMessage("");
+      setTurnstileToken("");
+      setShowForm(false);
+    } catch (error) {
+      console.error("Error sending enquiry:", error);
+      alert("Something went wrong while sending your message.");
+    } finally {
       setSending(false);
-      return;
     }
-
-    const emailResponse = await fetch("/api/send-enquiry", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ownerEmail: listing.email,
-        listingTitle: listing.title,
-        renterEmail: senderEmail,
-        renterMessage: message,
-        turnstileToken,
-      }),
-    });
-
-    if (!emailResponse.ok) {
-      alert(
-        "Your message was saved, but there was a problem sending the email notification."
-      );
-      setSending(false);
-      return;
-    }
-
-    alert("Message sent.");
-    setSenderEmail("");
-    setMessage("");
-    setTurnstileToken("");
-    setShowForm(false);
-    setSending(false);
   };
 
   return (
@@ -135,40 +152,60 @@ export default function ListingDetailClient({
         </a>
 
         <div className="overflow-hidden rounded-[32px] border border-[#e3ddd2] bg-white shadow-sm">
+
+          {/* MAIN IMAGE — OPTIMISED */}
+
           {selectedImage ? (
-            <img
-              src={selectedImage}
-              alt={listing.title}
-              className="h-[460px] w-full object-cover"
-            />
+            <div className="relative h-[460px] w-full bg-[#ebe7df]">
+              <Image
+                src={selectedImage}
+                alt={listing.title}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 1152px"
+                quality={75}
+                className="object-cover"
+              />
+            </div>
           ) : (
             <div className="flex h-[460px] w-full items-center justify-center bg-[#ebe7df] text-[#777]">
               No image added
             </div>
           )}
 
+          {/* GALLERY THUMBNAILS — OPTIMISED */}
+
           {galleryImages.length > 1 && (
             <div className="grid grid-cols-3 gap-3 border-b border-[#e3ddd2] bg-[#fbfaf7] p-4 sm:grid-cols-5">
-              {galleryImages.map((image) => (
+              {galleryImages.map((image, index) => (
                 <button
                   key={image}
                   type="button"
                   onClick={() => setSelectedImage(image)}
+                  aria-label={`View property photo ${index + 1}`}
+                  aria-pressed={selectedImage === image}
                   className={`overflow-hidden rounded-2xl border bg-white ${
                     selectedImage === image
                       ? "border-black"
                       : "border-[#e3ddd2]"
                   }`}
                 >
-                  <img
-                    src={image}
-                    alt="Listing gallery image"
-                    className="h-24 w-full object-cover"
-                  />
+                  <div className="relative h-24 w-full">
+                    <Image
+                      src={image}
+                      alt={`Listing gallery image ${index + 1}`}
+                      fill
+                      sizes="(max-width: 640px) 33vw, 200px"
+                      quality={65}
+                      className="object-cover"
+                    />
+                  </div>
                 </button>
               ))}
             </div>
           )}
+
+          {/* PROPERTY INFORMATION */}
 
           <div className="p-8 md:p-10">
             <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
@@ -198,55 +235,79 @@ export default function ListingDetailClient({
                 </p>
 
                 {listing.rent && (
-                  <p className="text-sm text-[#666]">per month</p>
+                  <p className="text-sm text-[#666]">
+                    per month
+                  </p>
                 )}
               </div>
             </div>
 
+            {/* PROPERTY FEATURES */}
+
             <div className="mb-8 grid gap-4 md:grid-cols-4">
               <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
-                <p className="mb-1 text-sm text-[#666]">Bedrooms</p>
+                <p className="mb-1 text-sm text-[#666]">
+                  Bedrooms
+                </p>
                 <p className="font-semibold">
-                  {listing.bedrooms !== null && listing.bedrooms !== undefined
+                  {listing.bedrooms !== null &&
+                  listing.bedrooms !== undefined
                     ? listing.bedrooms
                     : "Not specified"}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
-                <p className="mb-1 text-sm text-[#666]">Bathrooms</p>
+                <p className="mb-1 text-sm text-[#666]">
+                  Bathrooms
+                </p>
                 <p className="font-semibold">
-                  {listing.bathrooms !== null && listing.bathrooms !== undefined
+                  {listing.bathrooms !== null &&
+                  listing.bathrooms !== undefined
                     ? listing.bathrooms
                     : "Not specified"}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
-                <p className="mb-1 text-sm text-[#666]">Bills</p>
+                <p className="mb-1 text-sm text-[#666]">
+                  Bills
+                </p>
                 <p className="font-semibold">
-                  {listing.bills_included ? "Included" : "Not specified"}
+                  {listing.bills_included
+                    ? "Included"
+                    : "Not specified"}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
-                <p className="mb-1 text-sm text-[#666]">Pets</p>
+                <p className="mb-1 text-sm text-[#666]">
+                  Pets
+                </p>
                 <p className="font-semibold">
-                  {listing.pet_friendly ? "Pet friendly" : "Not specified"}
+                  {listing.pet_friendly
+                    ? "Pet friendly"
+                    : "Not specified"}
                 </p>
               </div>
             </div>
 
+            {/* LOCATION AND AVAILABILITY */}
+
             <div className="mb-8 grid gap-4 md:grid-cols-3">
               <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
-                <p className="mb-1 text-sm text-[#666]">Unit type</p>
+                <p className="mb-1 text-sm text-[#666]">
+                  Unit type
+                </p>
                 <p className="font-semibold">
                   {listing.unit_type || "Not specified"}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
-                <p className="mb-1 text-sm text-[#666]">Location</p>
+                <p className="mb-1 text-sm text-[#666]">
+                  Location
+                </p>
                 <p className="font-semibold">
                   {listing.town
                     ? `${listing.town}, Co. ${listing.county}`
@@ -255,18 +316,29 @@ export default function ListingDetailClient({
               </div>
 
               <div className="rounded-2xl border border-[#e3ddd2] bg-[#fbfaf7] p-5">
-                <p className="mb-1 text-sm text-[#666]">Available from</p>
-                <p className="font-semibold">{formattedAvailableFrom}</p>
+                <p className="mb-1 text-sm text-[#666]">
+                  Available from
+                </p>
+                <p className="font-semibold">
+                  {formattedAvailableFrom}
+                </p>
               </div>
             </div>
 
+            {/* DESCRIPTION */}
+
             <div className="mb-8">
-              <h2 className="mb-3 text-2xl font-semibold">Description</h2>
+              <h2 className="mb-3 text-2xl font-semibold">
+                Description
+              </h2>
 
               <p className="whitespace-pre-line leading-8 text-[#555]">
-                {listing.description || "No description provided."}
+                {listing.description ||
+                  "No description provided."}
               </p>
             </div>
+
+            {/* IMPORTANT INFORMATION */}
 
             <div className="mb-8 rounded-3xl border border-[#e3ddd2] bg-[#fbfaf7] p-6">
               <h2 className="mb-3 text-2xl font-semibold">
@@ -275,19 +347,24 @@ export default function ListingDetailClient({
 
               <ul className="space-y-2 leading-7 text-[#555]">
                 <li>
-                  Rent-a-Room treatment depends on current Irish rules and owner
-                  eligibility.
+                  Rent-a-Room treatment depends on current Irish
+                  rules and owner eligibility.
                 </li>
+
                 <li>
-                  Owners are responsible for planning, safety, insurance and
-                  compliance.
+                  Owners are responsible for planning, safety,
+                  insurance and compliance.
                 </li>
+
                 <li>
-                  ModRent is a listing platform and does not provide legal, tax,
-                  planning or building compliance advice.
+                  ModRent is a listing platform and does not
+                  provide legal, tax, planning or building
+                  compliance advice.
                 </li>
               </ul>
             </div>
+
+            {/* CONTACT OWNER BUTTON */}
 
             {!showForm && (
               <button
@@ -306,6 +383,8 @@ export default function ListingDetailClient({
               </button>
             )}
 
+            {/* CONTACT OWNER FORM */}
+
             {showForm && (
               <form
                 onSubmit={sendMessage}
@@ -321,7 +400,9 @@ export default function ListingDetailClient({
                     required
                     placeholder="you@example.ie"
                     value={senderEmail}
-                    onChange={(e) => setSenderEmail(e.target.value)}
+                    onChange={(e) =>
+                      setSenderEmail(e.target.value)
+                    }
                     className="w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
                   />
                 </div>
@@ -335,17 +416,24 @@ export default function ListingDetailClient({
                     required
                     placeholder="Write your message to the owner"
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    onChange={(e) =>
+                      setMessage(e.target.value)
+                    }
                     className="h-32 w-full rounded-xl border border-[#d8d2c7] px-4 py-3 outline-none focus:border-black"
                   />
                 </div>
 
                 <Turnstile
                   sitekey={
-                    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
+                    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
+                    ""
                   }
-                  onVerify={(token) => setTurnstileToken(token)}
-                  onExpire={() => setTurnstileToken("")}
+                  onVerify={(token) =>
+                    setTurnstileToken(token)
+                  }
+                  onExpire={() =>
+                    setTurnstileToken("")
+                  }
                 />
 
                 <div className="flex flex-col gap-3 sm:flex-row">
@@ -362,7 +450,9 @@ export default function ListingDetailClient({
                       opacity: sending ? 0.6 : 1,
                     }}
                   >
-                    {sending ? "Sending..." : "Send message"}
+                    {sending
+                      ? "Sending..."
+                      : "Send message"}
                   </button>
 
                   <button
