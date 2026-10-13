@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Turnstile from "react-turnstile";
 import { supabase } from "@/lib/supabase";
 
@@ -14,36 +14,72 @@ const unitTypes = [
 ];
 
 const counties = [
-  "Carlow",
-  "Cavan",
-  "Clare",
-  "Cork",
-  "Donegal",
-  "Dublin",
-  "Galway",
-  "Kerry",
-  "Kildare",
-  "Kilkenny",
-  "Laois",
-  "Leitrim",
-  "Limerick",
-  "Longford",
-  "Louth",
-  "Mayo",
-  "Meath",
-  "Monaghan",
-  "Offaly",
-  "Roscommon",
-  "Sligo",
-  "Tipperary",
-  "Waterford",
-  "Westmeath",
-  "Wexford",
-  "Wicklow",
+  "Carlow", "Cavan", "Clare", "Cork", "Donegal", "Dublin",
+  "Galway", "Kerry", "Kildare", "Kilkenny", "Laois",
+  "Leitrim", "Limerick", "Longford", "Louth", "Mayo",
+  "Meath", "Monaghan", "Offaly", "Roscommon", "Sligo",
+  "Tipperary", "Waterford", "Westmeath", "Wexford", "Wicklow",
 ];
 
 const MAX_PHOTOS = 5;
 const MAX_FILE_SIZE_MB = 5;
+const MAX_IMAGE_DIMENSION = 1600;
+const IMAGE_QUALITY = 0.78;
+
+// Optimise photographs before uploading to Supabase.
+async function optimisePhoto(photo: File): Promise<File> {
+  if (!photo.type.startsWith("image/")) {
+    throw new Error(`"${photo.name}" is not an image.`);
+  }
+
+  const bitmap = await createImageBitmap(photo);
+
+  try {
+    const scale = Math.min(
+      1,
+      MAX_IMAGE_DIMENSION / Math.max(bitmap.width, bitmap.height)
+    );
+
+    const width = Math.max(1, Math.round(bitmap.width * scale));
+    const height = Math.max(1, Math.round(bitmap.height * scale));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error("Image processing is unavailable in this browser.");
+    }
+
+    context.drawImage(bitmap, 0, 0, width, height);
+
+    const encode = (type: string) =>
+      new Promise<Blob | null>((resolve) => {
+        canvas.toBlob(resolve, type, IMAGE_QUALITY);
+      });
+
+    let blob = await encode("image/webp");
+
+    if (!blob || blob.type !== "image/webp") {
+      blob = await encode("image/jpeg");
+    }
+
+    if (!blob) {
+      throw new Error(`Could not process "${photo.name}".`);
+    }
+
+    const extension = blob.type === "image/webp" ? "webp" : "jpg";
+    const basename = photo.name.replace(/\.[^.]+$/, "");
+
+    return new File([blob], `${basename}.${extension}`, {
+      type: blob.type,
+    });
+  } finally {
+    bitmap.close();
+  }
+}
 
 declare global {
   interface Window {
@@ -69,16 +105,27 @@ export default function CreatePage() {
   const [saving, setSaving] = useState(false);
   const [hasTrackedStart, setHasTrackedStart] = useState(false);
 
-  const generatedTitle = useMemo(() => {
-    if (!unitType || !town || !county) {
-      return "";
-    }
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
+  useEffect(() => {
+    const urls = photos.map((photo) => URL.createObjectURL(photo));
+    setPreviewUrls(urls);
+
+    return () => {
+      urls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [photos]);
+
+  const generatedTitle = useMemo(() => {
+    if (!unitType || !town || !county) return "";
     return `${unitType} in ${town}, Co. ${county}`;
   }, [unitType, town, county]);
 
   const trackEvent = (eventName: string) => {
-    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    if (
+      typeof window !== "undefined" &&
+      typeof window.gtag === "function"
+    ) {
       window.gtag("event", eventName, {
         page: "create_listing",
       });
@@ -163,15 +210,21 @@ export default function CreatePage() {
       const uploadedPhotoUrls: string[] = [];
 
       for (const photo of photos) {
-        const fileExt = photo.name.split(".").pop();
+        const optimisedPhoto = await optimisePhoto(photo);
+
+        const fileExt = optimisedPhoto.name.split(".").pop();
+
         const fileName = `${Date.now()}-${Math.random()
           .toString(36)
           .slice(2)}.${fileExt}`;
+
         const filePath = `listings/${fileName}`;
 
         const { error: uploadError } = await supabase.storage
           .from("listing-photos")
-          .upload(filePath, photo);
+          .upload(filePath, optimisedPhoto, {
+            contentType: optimisedPhoto.type,
+          });
 
         if (uploadError) {
           alert(`Photo upload failed: ${uploadError.message}`);
@@ -187,7 +240,9 @@ export default function CreatePage() {
       }
 
       const bannerImageUrl =
-        uploadedPhotoUrls[bannerIndex] || uploadedPhotoUrls[0] || "";
+        uploadedPhotoUrls[bannerIndex] ||
+        uploadedPhotoUrls[0] ||
+        "";
 
       const response = await fetch("/api/submit-listing", {
         method: "POST",
@@ -237,11 +292,22 @@ export default function CreatePage() {
       resetForm();
     } catch (error) {
       console.error("Listing submission failed:", error);
-      alert("Something went wrong while submitting the listing.");
+
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong while submitting the listing."
+      );
     }
 
     setSaving(false);
   };
+
+  const fieldClass =
+    "w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 text-[#1f2933] outline-none focus:border-[#244e3b]";
+
+  const labelClass =
+    "mb-2 block text-sm font-semibold text-[#173528]";
 
   return (
     <main className="min-h-screen bg-[#f7f3ea] text-[#1f2933]">
@@ -249,6 +315,7 @@ export default function CreatePage() {
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
 
           {/* LEFT SIDE */}
+
           <div className="lg:sticky lg:top-10">
             <div className="mb-5 inline-block rounded-full border border-[#d8cdbb] bg-[#fffdf8] px-4 py-2 text-sm font-semibold text-[#244e3b]">
               Free property listings
@@ -265,53 +332,44 @@ export default function CreatePage() {
             </p>
 
             <div className="mb-8 space-y-3">
-              <div className="flex gap-4 rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e6efe8] font-bold text-[#244e3b]">
-                  1
-                </div>
+              {[
+                {
+                  number: 1,
+                  title: "100% free to list",
+                  description:
+                    "Create your standard listing and receive enquiries with no upfront listing fee.",
+                },
+                {
+                  number: 2,
+                  title: "Renters are already looking",
+                  description:
+                    "Reach people looking for modular homes, cabins and alternative rental accommodation in Ireland.",
+                },
+                {
+                  number: 3,
+                  title: "Receive direct enquiries",
+                  description:
+                    "Interested renters can contact you directly through your ModRent listing.",
+                },
+              ].map((benefit) => (
+                <div
+                  key={benefit.number}
+                  className="flex gap-4 rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-5"
+                >
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e6efe8] font-bold text-[#244e3b]">
+                    {benefit.number}
+                  </div>
 
-                <div>
-                  <h2 className="mb-1 font-bold text-[#173528]">
-                    100% free to list
-                  </h2>
-                  <p className="text-sm leading-6 text-[#5f6b63]">
-                    Create your standard listing and receive enquiries with no
-                    upfront listing fee.
-                  </p>
+                  <div>
+                    <h2 className="mb-1 font-bold text-[#173528]">
+                      {benefit.title}
+                    </h2>
+                    <p className="text-sm leading-6 text-[#5f6b63]">
+                      {benefit.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex gap-4 rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e6efe8] font-bold text-[#244e3b]">
-                  2
-                </div>
-
-                <div>
-                  <h2 className="mb-1 font-bold text-[#173528]">
-                    Renters are already looking
-                  </h2>
-                  <p className="text-sm leading-6 text-[#5f6b63]">
-                    Reach people looking for modular homes, cabins and
-                    alternative rental accommodation in Ireland.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-4 rounded-2xl border border-[#d8cdbb] bg-[#fffdf8] p-5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e6efe8] font-bold text-[#244e3b]">
-                  3
-                </div>
-
-                <div>
-                  <h2 className="mb-1 font-bold text-[#173528]">
-                    Receive direct enquiries
-                  </h2>
-                  <p className="text-sm leading-6 text-[#5f6b63]">
-                    Interested renters can contact you directly through your
-                    ModRent listing.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
 
             <div className="rounded-[28px] bg-[#244e3b] p-6 text-white md:p-7">
@@ -333,6 +391,7 @@ export default function CreatePage() {
           </div>
 
           {/* FORM */}
+
           <div>
             <form
               onSubmit={handleSubmit}
@@ -350,12 +409,13 @@ export default function CreatePage() {
 
                 <p className="text-base leading-7 text-[#5f6b63]">
                   Add a few details and photos below. It only takes a few
-                  minutes. We&apos;ll quickly check your listing before it goes
-                  live.
+                  minutes. We&apos;ll quickly check your listing before it
+                  goes live.
                 </p>
               </div>
 
               {/* AUTO TITLE */}
+
               <div className="rounded-2xl border border-[#d8cdbb] bg-white p-5">
                 <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-[#c9823a]">
                   Your listing title
@@ -367,14 +427,15 @@ export default function CreatePage() {
                 </p>
 
                 <p className="mt-2 text-sm leading-6 text-[#5f6b63]">
-                  Your title will be created automatically from the unit type,
-                  town and county you enter below.
+                  Your title will be created automatically from the unit
+                  type, town and county you enter below.
                 </p>
               </div>
 
               {/* UNIT TYPE */}
+
               <div>
-                <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                <label className={labelClass}>
                   What type of property is it?
                 </label>
 
@@ -382,9 +443,10 @@ export default function CreatePage() {
                   value={unitType}
                   onChange={(e) => setUnitType(e.target.value)}
                   required
-                  className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 text-[#1f2933] outline-none focus:border-[#244e3b]"
+                  className={fieldClass}
                 >
                   <option value="">Select unit type</option>
+
                   {unitTypes.map((type) => (
                     <option key={type} value={type}>
                       {type}
@@ -394,9 +456,10 @@ export default function CreatePage() {
               </div>
 
               {/* LOCATION */}
+
               <div className="grid gap-5 md:grid-cols-2">
                 <div>
-                  <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                  <label className={labelClass}>
                     Town or area
                   </label>
 
@@ -406,12 +469,12 @@ export default function CreatePage() {
                     value={town}
                     onChange={(e) => setTown(e.target.value)}
                     required
-                    className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
+                    className={fieldClass}
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                  <label className={labelClass}>
                     County
                   </label>
 
@@ -419,9 +482,10 @@ export default function CreatePage() {
                     value={county}
                     onChange={(e) => setCounty(e.target.value)}
                     required
-                    className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 text-[#1f2933] outline-none focus:border-[#244e3b]"
+                    className={fieldClass}
                   >
                     <option value="">Select county</option>
+
                     {counties.map((countyName) => (
                       <option key={countyName} value={countyName}>
                         {countyName}
@@ -432,9 +496,10 @@ export default function CreatePage() {
               </div>
 
               {/* RENT / BEDROOMS / BATHROOMS */}
+
               <div className="grid gap-5 md:grid-cols-3">
                 <div>
-                  <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                  <label className={labelClass}>
                     Monthly rent (€)
                   </label>
 
@@ -445,12 +510,12 @@ export default function CreatePage() {
                     value={rent}
                     onChange={(e) => setRent(e.target.value)}
                     required
-                    className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
+                    className={fieldClass}
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                  <label className={labelClass}>
                     Bedrooms
                   </label>
 
@@ -460,12 +525,12 @@ export default function CreatePage() {
                     placeholder="1"
                     value={bedrooms}
                     onChange={(e) => setBedrooms(e.target.value)}
-                    className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
+                    className={fieldClass}
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                  <label className={labelClass}>
                     Bathrooms
                   </label>
 
@@ -475,14 +540,15 @@ export default function CreatePage() {
                     placeholder="1"
                     value={bathrooms}
                     onChange={(e) => setBathrooms(e.target.value)}
-                    className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
+                    className={fieldClass}
                   />
                 </div>
               </div>
 
-              {/* AVAILABLE */}
+              {/* AVAILABLE FROM */}
+
               <div>
-                <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                <label className={labelClass}>
                   Available from
                 </label>
 
@@ -491,11 +557,12 @@ export default function CreatePage() {
                   value={availableFrom}
                   onChange={(e) => setAvailableFrom(e.target.value)}
                   required
-                  className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
+                  className={fieldClass}
                 />
               </div>
 
               {/* OPTIONS */}
+
               <div className="grid gap-4 md:grid-cols-2">
                 <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-[#d8cdbb] bg-white p-4 transition hover:border-[#244e3b]">
                   <input
@@ -504,6 +571,7 @@ export default function CreatePage() {
                     onChange={(e) => setBillsIncluded(e.target.checked)}
                     className="h-4 w-4"
                   />
+
                   <span className="font-medium text-[#173528]">
                     Bills included
                   </span>
@@ -516,6 +584,7 @@ export default function CreatePage() {
                     onChange={(e) => setPetFriendly(e.target.checked)}
                     className="h-4 w-4"
                   />
+
                   <span className="font-medium text-[#173528]">
                     Pet friendly
                   </span>
@@ -523,8 +592,9 @@ export default function CreatePage() {
               </div>
 
               {/* PHOTOS */}
+
               <div>
-                <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                <label className={labelClass}>
                   Add your photos
                 </label>
 
@@ -550,13 +620,18 @@ export default function CreatePage() {
                   </p>
 
                   <p className="mt-2 text-sm leading-6 text-[#5f6b63]">
-                    Upload up to {MAX_PHOTOS} clear photos. Maximum{" "}
-                    {MAX_FILE_SIZE_MB}MB per photo.
+                    Upload up to {MAX_PHOTOS} clear photos.
+                    Maximum {MAX_FILE_SIZE_MB}MB per photo.
+                  </p>
+
+                  <p className="mt-2 text-xs text-[#6b746e]">
+                    Photos are automatically optimised for faster loading.
                   </p>
                 </label>
               </div>
 
-              {/* BANNER IMAGE */}
+              {/* MAIN PHOTO SELECTION */}
+
               {photos.length > 0 && (
                 <div className="rounded-2xl border border-[#d8cdbb] bg-white p-5">
                   <h2 className="mb-2 text-lg font-bold text-[#173528]">
@@ -564,8 +639,8 @@ export default function CreatePage() {
                   </h2>
 
                   <p className="mb-4 text-sm leading-6 text-[#5f6b63]">
-                    This is the first image renters will see when they find your
-                    property.
+                    This is the first image renters will see when they
+                    find your property.
                   </p>
 
                   <div className="grid gap-4 sm:grid-cols-2">
@@ -579,7 +654,7 @@ export default function CreatePage() {
                         }`}
                       >
                         <img
-                          src={URL.createObjectURL(photo)}
+                          src={previewUrls[index] || ""}
                           alt={`Selected upload ${index + 1}`}
                           className="h-40 w-full object-cover"
                         />
@@ -605,8 +680,9 @@ export default function CreatePage() {
               )}
 
               {/* DESCRIPTION */}
+
               <div>
-                <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                <label className={labelClass}>
                   Tell renters about your property
                 </label>
 
@@ -615,18 +691,19 @@ export default function CreatePage() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   required
-                  className="h-40 w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
+                  className={`${fieldClass} h-40`}
                 />
 
                 <p className="mt-2 text-sm text-[#6b746e]">
-                  You don&apos;t need to write an advert — just describe the
-                  property clearly and honestly.
+                  You don&apos;t need to write an advert — just describe
+                  the property clearly and honestly.
                 </p>
               </div>
 
               {/* EMAIL */}
+
               <div>
-                <label className="mb-2 block text-sm font-semibold text-[#173528]">
+                <label className={labelClass}>
                   Your contact email
                 </label>
 
@@ -636,7 +713,7 @@ export default function CreatePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full rounded-xl border border-[#d8d2c7] bg-white px-4 py-3.5 outline-none focus:border-[#244e3b]"
+                  className={fieldClass}
                 />
 
                 <p className="mt-2 text-sm text-[#6b746e]">
@@ -646,26 +723,32 @@ export default function CreatePage() {
               </div>
 
               {/* OWNER RESPONSIBILITY */}
+
               <div className="border-t border-[#d8cdbb] pt-6">
                 <p className="text-sm leading-6 text-[#6b746e]">
                   <strong className="text-[#173528]">
                     Owner responsibility:
                   </strong>{" "}
-                  Owners are responsible for ensuring their property meets
-                  applicable planning, tax, insurance, safety, building
-                  regulation and legal requirements. ModRent is a listing
-                  marketplace and does not verify compliance.
+                  Owners are responsible for ensuring their property
+                  meets applicable planning, tax, insurance, safety,
+                  building regulation and legal requirements.
+                  ModRent is a listing marketplace and does not
+                  verify compliance.
                 </p>
               </div>
 
               {/* TURNSTILE */}
+
               <Turnstile
-                sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+                sitekey={
+                  process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
+                }
                 onVerify={(token) => setTurnstileToken(token)}
                 onExpire={() => setTurnstileToken("")}
               />
 
               {/* SUBMIT */}
+
               <button
                 type="submit"
                 disabled={saving}
@@ -682,12 +765,14 @@ export default function CreatePage() {
                   cursor: saving ? "not-allowed" : "pointer",
                 }}
               >
-                {saving ? "Creating your listing..." : "Create My Free Listing"}
+                {saving
+                  ? "Creating your listing..."
+                  : "Create My Free Listing"}
               </button>
 
               <p className="text-center text-xs leading-5 text-[#6b746e]">
-                Your listing will be checked by ModRent before appearing
-                publicly.
+                Your listing will be checked by ModRent before
+                appearing publicly.
               </p>
             </form>
           </div>
